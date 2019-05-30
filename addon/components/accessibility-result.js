@@ -10,7 +10,7 @@ export default Component.extend({
   style: '',
   popOverPos: '',
   popOverStyle: '',
-  scrollDebounce: 0,
+  scrollDebounce: 10,
 
   didInsertElement() {
     this._super(...arguments);
@@ -38,11 +38,14 @@ export default Component.extend({
 
   _listen() {
     this.set('_scrollHandler', bind(this, '_scroll'));
+    this.set('_clickHandler', bind(this, '_outsideClick'));
     this._listener().addEventListener('scroll', this._scrollHandler);
+    document.addEventListener('click', this._clickHandler);
   },
 
   _stopListening() {
     this._listener().removeEventListener('scroll', this._scrollHandler);
+    document.removeEventListener('click', this._clickHandler);
     cancel(this._scrollDebounceId);
   },
 
@@ -61,6 +64,13 @@ export default Component.extend({
 
   _scroll(e) {
     this.set('_scrollDebounceId', debounce(this, '_debouncedScroll', e, this.scrollDebounce));
+  },
+
+  _outsideClick(e) {
+    let target = e.target;
+    if (!target.closest(`#${this.elementId}`)) {
+      this.set('canShowDetails', false);
+    }
   },
 
   _debouncedScroll() {
