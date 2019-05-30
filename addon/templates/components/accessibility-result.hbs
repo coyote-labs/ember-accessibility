@@ -1,0 +1,23 @@
+<button type="button" style={{style}} class="redDot" {{action "showDetails"}}></button>
+
+<div class="accessTest-popover {{popOverPos}} {{if canShowDetails "show"}}" violate-id={{violate.id}} style={{popOverStyle}}>
+  <div class="arrow" style={{arrowPos}}></div>
+  <h3 class="accessTest-popover-title">
+    {{violate.help}}
+  </h3>
+  <div class="accessTest-popover-content">
+    <div class="helpRow">
+      <span class="label-title">Description: </span>
+      {{violate.description}}
+    </div>
+    <div class="helpRow">
+      <a href={{violate.helpUrl}} target="_blank" rel="noopener">Read More</a>
+    </div>
+    <div class="helpRow">
+      <span class="label-title">Impact: </span>
+      {{violate.impact}}
+    </div>
+  </div>
+</div>
+
+{{yield}}
