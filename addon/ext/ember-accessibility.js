@@ -6,6 +6,6 @@ Route.reopen({
   accessibilityTest: service('accessibility-test'),
 
   handleRouteExit: on('deactivate', function() {
-    this.accessibilityTest.toggleAccess();
+    this.accessibilityTest.set('violations', []);
   })
 });

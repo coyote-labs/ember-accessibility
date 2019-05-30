@@ -1,22 +1,27 @@
-<button type="button" style={{style}} class="redDot" {{action "showDetails"}}></button>
+<button
+  type="button"
+  aria-label="Accessibility Issue"
+  title="Accessibility Issue"
+  style={{style}}
+  class="toggle-accessibility-result" {{action "showDetails"}}>
+</button>
 
-<div class="accessTest-popover {{popOverPos}} {{if canShowDetails "show"}}" violate-id={{violate.id}} style={{popOverStyle}}>
+<div class="accessibility-result-popover accessibility-result {{popOverPos}} {{if canShowDetails "show"}}" violation-id={{violation.id}} style={{popOverStyle}}>
   <div class="arrow" style={{arrowPos}}></div>
-  <h3 class="accessTest-popover-title">
-    {{violate.help}}
-  </h3>
-  <div class="accessTest-popover-content">
-    <div class="helpRow">
-      <span class="label-title">Description: </span>
-      {{violate.description}}
-    </div>
-    <div class="helpRow">
-      <a href={{violate.helpUrl}} target="_blank" rel="noopener">Read More</a>
-    </div>
-    <div class="helpRow">
-      <span class="label-title">Impact: </span>
-      {{violate.impact}}
-    </div>
+  <div class="accessibility-result-impact">
+    <p>
+      {{component impactIcon}}
+    </p>
+  </div>
+  <div class="accessibility-result-content">
+    <h3 class="accessibility-result-title">{{violation.help}}</h3>
+    <p class="accessibility-result-description">
+      {{violation.description}}
+      {{violation.impact}}
+    </p>
+    <p class="accessibility-result-description">
+      <a href={{violation.helpUrl}} target="_blank" rel="noopener">Read More</a>
+    </p>
   </div>
 </div>
 

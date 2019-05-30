@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import layout from '../templates/components/accessibility-result';
 import { htmlSafe } from '@ember/template';
+import { computed } from '@ember/object';
 import { bind, debounce, cancel } from '@ember/runloop';
 
 export default Component.extend({
@@ -18,6 +19,11 @@ export default Component.extend({
     this.findPosition();
   },
 
+  impactIcon: computed('violation.impact', function() {
+    let { impact = 'minor' } = this.violation;
+    return `${impact.toLowerCase()}-icon`;
+  }),
+
   getOffset(el) {
     let rect = el.getBoundingClientRect();
     return {
@@ -29,7 +35,6 @@ export default Component.extend({
       bottom: rect.bottom
     };
   },
-
 
   willDestroyElement() {
     this._super(...arguments);
@@ -49,10 +54,9 @@ export default Component.extend({
     cancel(this._scrollDebounceId);
   },
 
-
   _listener() {
-    let searchIndex = this.violate.index || 0;
-    let node = document.querySelector(this.violate.nodes[searchIndex].target[0]);
+    let searchIndex = this.violation.index || 0;
+    let node = document.querySelector(this.violation.nodes[searchIndex].target[0]);
     this.scrollParentElement = this.findScrollElement(node);
     if (this.scrollParentElement) {
       return this.scrollParentElement;
@@ -60,7 +64,6 @@ export default Component.extend({
 
     return this.element;
   },
-
 
   _scroll(e) {
     this.set('_scrollDebounceId', debounce(this, '_debouncedScroll', e, this.scrollDebounce));
@@ -78,16 +81,24 @@ export default Component.extend({
   },
 
   findPosition() {
-    let searchIndex = this.violate.index || 0;
-    let violatedElement = document.querySelector(this.violate.nodes[searchIndex].target[0]);
+    let searchIndex = this.violation.index || 0;
+    let violatedElement = document.querySelector(this.violation.nodes[searchIndex].target[0]);
     let violatedElementPos = this.getOffset(violatedElement);
 
     this.set('violatedElementPos', violatedElementPos);
+
+    let impactColors = {
+      critical: '#d0021b',
+      serious: '#f5a623',
+      moderate: '#f5a623',
+      minor: '#4a90e2'
+    };
 
     let currentStyleEle = `
       position : absolute;
       top: ${violatedElementPos.top + window.scrollY}px;
       left: ${violatedElementPos.left + window.scrollX}px;
+      background: ${impactColors[this.violation.impact]};
     `;
 
     this.set('style', htmlSafe(currentStyleEle));
@@ -118,11 +129,10 @@ export default Component.extend({
     return this.findScrollElement(node.parentNode);
   },
 
-
   actions: {
     showDetails() {
       if (this.toggleProperty('canShowDetails')) {
-        let popOverElem = this.element.querySelector(`[violate-id='${this.violate.id}']`);
+        let popOverElem = this.element.querySelector(`[violation-id='${this.violation.id}']`);
         let topPos = this.violatedElementPos.top - ( popOverElem.clientHeight / 2 ) + 6 + window.scrollY;
         let leftRightPos = this.violatedElementPos.left - popOverElem.clientWidth - 14;
         let arrowPos = '';
@@ -132,7 +142,7 @@ export default Component.extend({
           topPos = 0;
         }
 
-        let calcPopOverPos = this.violatedElementPos.left + popOverElem.clientHeight
+        let calcPopOverPos = this.violatedElementPos.left + popOverElem.clientWidth;
         if(calcPopOverPos > window.innerWidth) {
           this.set('popOverPos', 'left');
         } else {
