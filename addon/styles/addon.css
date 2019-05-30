@@ -4,7 +4,7 @@
   width: 20px;
   height: 20px;
   border-radius: 100%;
-  z-index: 2147483636;
+  z-index: 2147483637;
 }
 
 .accessibility-result-popover {
@@ -21,7 +21,7 @@
   border-radius: 6px;
   -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
   box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
-  z-index: 2147483637;
+  z-index: 2147483638;
 }
 
 .accessibility-result-popover.show {
@@ -134,7 +134,7 @@
   position: fixed;
   top: 100px;
   right: 5%;
-  z-index: 2147483638;
+  z-index: 2147483636;
 }
 
 .accessibility-toggle-results button {
