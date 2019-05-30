@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import layout from '../templates/components/list-component'
+import layout from '../templates/components/accessibility-result';
 import { htmlSafe } from '@ember/template';
 import { bind, debounce, cancel } from '@ember/runloop';
 
@@ -19,8 +19,15 @@ export default Component.extend({
   },
 
   getOffset(el) {
-    var rect = el.getBoundingClientRect();
-    return { x: rect.x, y: rect.y, top: rect.top, left: rect.left, right: rect.right, bottom: rect.bottom }
+    let rect = el.getBoundingClientRect();
+    return {
+      x: rect.x,
+      y: rect.y,
+      top: rect.top,
+      left: rect.left,
+      right: rect.right,
+      bottom: rect.bottom
+    };
   },
 
 
@@ -46,10 +53,9 @@ export default Component.extend({
     this.scrollParentElement = this.findScrollElement(node);
     if (this.scrollParentElement) {
       return this.scrollParentElement;
-    } else {
-      console.log(node);
-      return this.element;
     }
+
+    return this.element;
   },
 
 
@@ -68,9 +74,10 @@ export default Component.extend({
 
     this.set('violatedElementPos', violatedElementPos);
 
-    let currentStyleEle = `position : absolute;
-    top: ${violatedElementPos.top + window.scrollY}px;
-    left: ${violatedElementPos.left + window.scrollX}px;
+    let currentStyleEle = `
+      position : absolute;
+      top: ${violatedElementPos.top + window.scrollY}px;
+      left: ${violatedElementPos.left + window.scrollX}px;
     `;
 
     this.set('style', htmlSafe(currentStyleEle));
@@ -83,36 +90,38 @@ export default Component.extend({
   scrollElem(node) {
     let regex = /(auto|scroll)/;
     return regex.test(
-    this.styleElem(node, "overflow") +
-    this.styleElem(node, "overflow-y") +
-    this.styleElem(node, "overflow-x"));
+      this.styleElem(node, 'overflow') +
+      this.styleElem(node, 'overflow-y') +
+      this.styleElem(node, 'overflow-x')
+    );
   },
 
   findScrollElement(node) {
-    if(!node || node === document.body) {
-      return document.body
-    } else {
-      if(this.scrollElem(node)) {
-        return node;
-      } else {
-        return this.findScrollElement(node.parentNode);
-      }
+    if (!node || node === document.body) {
+      return document;
     }
+
+    if (this.scrollElem(node)) {
+      return node;
+    }
+
+    return this.findScrollElement(node.parentNode);
   },
 
 
   actions: {
     showDetails() {
-      if(this.toggleProperty('canShowDetails')) {
+      if (this.toggleProperty('canShowDetails')) {
         let popOverElem = this.element.querySelector(`[violate-id='${this.violate.id}']`);
-        let topPos = this.violatedElementPos.top  - ( popOverElem.clientHeight / 2 ) + 6 ;
+        let topPos = this.violatedElementPos.top - ( popOverElem.clientHeight / 2 ) + 6 + window.scrollY;
         let leftRightPos = this.violatedElementPos.left - popOverElem.clientWidth - 14;
         let arrowPos = '';
 
-        if(topPos < 0) {
+        if (topPos < 0) {
           arrowPos = this.violatedElementPos.top + 6;
           topPos = 0;
         }
+
         let calcPopOverPos = this.violatedElementPos.left + popOverElem.clientHeight
         if(calcPopOverPos > window.innerWidth) {
           this.set('popOverPos', 'left');
@@ -121,8 +130,10 @@ export default Component.extend({
           this.set('popOverPos', 'right');
         }
 
-        this.set('popOverStyle', `top:${topPos}px;left:${leftRightPos}px`);
-        this.set('arrowPos', `top:${arrowPos}px`);
+        this.setProperties({
+          popOverStyle: `top:${topPos}px;left:${leftRightPos}px`,
+          arrowPos: `top:${arrowPos}px`
+        });
       }
     }
   }

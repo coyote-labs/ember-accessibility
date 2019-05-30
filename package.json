@@ -1,5 +1,5 @@
 {
-  "name": "access-test-addon",
+  "name": "ember-accessibility",
   "version": "0.0.0",
   "description": "The default blueprint for ember-cli addons.",
   "keywords": [

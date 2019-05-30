@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import layout from '../templates/components/access-component';
+import layout from '../templates/components/accessibility-results';
 import { inject as service } from '@ember/service';
 import axe from 'axe-core';
 
@@ -12,9 +12,9 @@ export default Component.extend({
       let axeResults = await axe.run(document.querySelector('body'), { restoreScroll: false });
       let violations = [];
 
-      if(axeResults.violations.length) {
+      if (axeResults.violations.length) {
         axeResults.violations.forEach((axeViolation) => {
-          if(axeViolation.nodes.length === 1) {
+          if (axeViolation.nodes.length === 1) {
             violations.push(axeViolation);
           } else {
             axeViolation.nodes.forEach((node, index) => {
