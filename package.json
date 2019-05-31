@@ -1,13 +1,17 @@
 {
   "name": "ember-accessibility",
-  "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "0.0.1",
+  "description": "An EmberJS addon to help identify accessibility violations",
   "keywords": [
     "ember-addon"
   ],
-  "repository": "",
+  "repository": "https://github.com/coyote-labs/ember-accessibility",
   "license": "MIT",
-  "author": "",
+  "author": "Coyote Labs",
+  "contributors": [
+    "Kandha Vivek Raj <kandhavivekraj@gmail.com>",
+    "Sivasubramanyam A <hi@siva.dev> (https://siva.dev)"
+  ],
   "directories": {
     "doc": "doc",
     "test": "tests"

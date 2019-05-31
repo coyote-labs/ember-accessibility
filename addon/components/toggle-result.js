@@ -8,13 +8,21 @@ export default Component.extend({
   accessibilityTest: service('accessibility-test'),
 
   async click() {
-    if (this.accessibilityTest.violations.length) {
-      this.accessibilityTest.set('violations', []);
+    if (this.accessibilityTest.isEnabled) {
+      this.accessibilityTest.setProperties({
+        'violations': [],
+        'isEnabled': false
+      });
+
       return;
     }
 
-    this.set('isLoading', true);
+    this.setProperties({
+      'isAuditing': true,
+      'accessibilityTest.isEnabled': true
+    });
+
     await this.accessibilityTest.getViolations();
-    this.set('isLoading', false);
+    this.set('isAuditing', false);
   }
 });

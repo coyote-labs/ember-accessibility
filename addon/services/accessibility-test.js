@@ -1,14 +1,15 @@
 import axe from 'axe-core';
 import Service from '@ember/service';
+import { A } from '@ember/array'
 
 export default Service.extend({
   init() {
     this._super(...arguments);
-    this.violations = [];
+    this.violations = A();
   },
 
-  async getViolations() {
-    let axeResults = await axe.run(document.querySelector('body'), { restoreScroll: true });
+  async auditWithAxe(element) {
+    let axeResults = await axe.run(element, { restoreScroll: true });
     let violations = [];
 
     if (axeResults.violations.length) {
@@ -23,9 +24,17 @@ export default Service.extend({
           });
         }
       });
-      this.set('violations', violations);
-    } else {
-      this.set('violations', []);
     }
+
+    return violations;
+  },
+
+  async getViolations(element = document.querySelector('body')) {
+    let violations = await this.auditWithAxe(element);
+    if (this.isEnabled) {
+      violations = A([...this.violations, ...violations]);
+    }
+
+    this.set('violations', violations);
   }
 });
