@@ -25,15 +25,7 @@ export default Component.extend({
   }),
 
   getOffset(el) {
-    let rect = el.getBoundingClientRect();
-    return {
-      x: rect.x,
-      y: rect.y,
-      top: rect.top,
-      left: rect.left,
-      right: rect.right,
-      bottom: rect.bottom
-    };
+    return el.getBoundingClientRect();
   },
 
   willDestroyElement() {
@@ -85,8 +77,6 @@ export default Component.extend({
     let violatedElement = document.querySelector(this.violation.nodes[searchIndex].target[0]);
     let violatedElementPos = this.getOffset(violatedElement);
 
-    this.set('violatedElementPos', violatedElementPos);
-
     let impactColors = {
       critical: '#d0021b',
       serious: '#f5a623',
@@ -133,20 +123,23 @@ export default Component.extend({
     showDetails() {
       if (this.toggleProperty('canShowDetails')) {
         let popOverElem = this.element.querySelector(`[violation-id='${this.violation.id}']`);
-        let topPos = this.violatedElementPos.top - ( popOverElem.clientHeight / 2 ) + 6 + window.scrollY;
-        let leftRightPos = this.violatedElementPos.left - popOverElem.clientWidth - 14;
+        let buttonElem = this.element.querySelector('button');
+        let buttonElemPos = this.getOffset(buttonElem);
+
+        let topPos = buttonElemPos.top - ( popOverElem.clientHeight / 2 ) + ( buttonElemPos.height *  0.5 ) + window.scrollY;
+        let leftRightPos = buttonElemPos.left - popOverElem.clientWidth - ( buttonElemPos.width *  0.5 );
         let arrowPos = '';
 
         if (topPos < 0) {
-          arrowPos = this.violatedElementPos.top + 6;
+          arrowPos = buttonElemPos.top + ( buttonElemPos.height *  0.5 );
           topPos = 0;
         }
 
-        let calcPopOverPos = this.violatedElementPos.left + popOverElem.clientWidth;
+        let calcPopOverPos = buttonElemPos.left + popOverElem.clientWidth;
         if(calcPopOverPos > window.innerWidth) {
           this.set('popOverPos', 'left');
         } else {
-          leftRightPos = this.violatedElementPos.left + 25;
+          leftRightPos = buttonElemPos.left + ( buttonElemPos.width * 1.5 );
           this.set('popOverPos', 'right');
         }
 
