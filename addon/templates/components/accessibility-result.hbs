@@ -18,9 +18,14 @@
     <p class="accessibility-result-description">
       {{violation.description}}
       {{violation.impact}}
-    </p>
-    <p class="accessibility-result-description">
       <a href={{violation.helpUrl}} target="_blank" rel="noopener">Read More</a>
+    </p>
+    <p class="accessibility-result-summary">
+      <ul>
+        {{#each failureSummary as |failures|}}
+          {{failures}}
+        {{/each}}
+      </ul>
     </p>
   </div>
 </div>

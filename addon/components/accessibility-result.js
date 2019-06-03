@@ -124,6 +124,20 @@ export default Component.extend({
       left: ${violatedElementPos.left + window.scrollX}px;
       background: ${impactColors[this.violation.impact]};
     `;
+    let failureSummary = this.violation.nodes[searchIndex].failureSummary || [];
+
+    failureSummary = failureSummary.split('\n');
+
+    failureSummary = failureSummary.map(failure => {
+      if(failure.length) {
+        if(failure.includes('Fix all of the following') || failure.includes('Fix any of the following')) {
+          return htmlSafe(`<b>${failure}</b>`);
+        }
+        return htmlSafe(`<li>${failure}</li>`);
+      }
+    });
+
+    this.set('failureSummary', failureSummary);
 
     this.set('style', htmlSafe(currentStyleEle));
   },

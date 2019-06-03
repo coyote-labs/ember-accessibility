@@ -190,3 +190,14 @@
   width: 80%;
   padding: 0 10px;
 }
+
+
+.accessibility-result-summary > ul {
+  list-style-position: inside;
+  padding: 0;
+}
+
+
+.accessibility-result-summary > ul > li {
+  padding: 10px;
+}
