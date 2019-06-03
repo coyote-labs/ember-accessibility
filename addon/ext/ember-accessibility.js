@@ -14,9 +14,11 @@ Route.reopen({
 Component.reopen({
   accessibilityTest: service('accessibility-test'),
 
-  didRender() {
+  didInsertElement() {
     this._super(...arguments);
-    this._runAudit();
+    if(!this.isAccessibilityTest) {
+      this._runAudit();
+    }
   },
 
   _runAudit() {

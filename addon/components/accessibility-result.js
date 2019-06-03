@@ -14,6 +14,7 @@ export default Component.extend({
   popOverStyle: '',
   scrollDebounce: 10,
   accessibilityTest: service('accessibility-test'),
+  isAccessibilityTest: true,
 
   mouseEnter() {
     let violatingElement = document.querySelector(this.domElement);
@@ -29,8 +30,8 @@ export default Component.extend({
     let rectangle = violatingElement.getBoundingClientRect();
     this.set('overlayPos', `
       position: absolute;
-      top: ${rectangle.top}px;
-      left: ${rectangle.left}px;
+      top: ${rectangle.top + window.scrollY}px;
+      left: ${rectangle.left + window.scrollX}px;
       bottom: ${rectangle.bottom}px;
       right: ${rectangle.right}px;
       height: ${rectangle.height}px;

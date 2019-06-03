@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 
 export default Component.extend({
   layout,
+  isAccessibilityTest: true,
   classNames: ['accessibility-toggle-results'],
   accessibilityTest: service('accessibility-test'),
 
