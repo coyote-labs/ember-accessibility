@@ -7,7 +7,11 @@ Route.reopen({
   accessibilityTest: service('accessibility-test'),
 
   handleRouteExit: on('deactivate', function() {
-    this.accessibilityTest.set('violations', []);
+
+    this.accessibilityTest.setProperties({
+      isEnabled: false,
+      violations: []
+    });
   })
 });
 
