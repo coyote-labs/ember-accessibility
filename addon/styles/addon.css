@@ -10,15 +10,14 @@
 .accessibility-result-popover {
   visibility: hidden;
   position: absolute;
-  min-width: 500px;
-  padding: 1px;
+  max-width: 500px;
+  padding: 10px;
   text-align: left;
   white-space: normal;
   background-color: #fff;
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, .2);
-  border-radius: 6px;
   -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
   box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
   z-index: 2147483638;
@@ -159,7 +158,7 @@
 
 .accessibility-result {
   font-family: sans-serif;
-  padding: 10px;
+  padding: 25px 5px;
 }
 
 .accessibility-spin {
@@ -174,18 +173,20 @@
 
 .accessibility-result-impact {
   float: left;
-  width: 15%;
+  width: 13%;
   text-align: center;
 }
 
+.accessibility-result-impact > h3 {
+}
 .accessibility-result-impact > p {
   padding: 0;
   margin: 0;
-  padding-top: 20%;
   padding-left: 5px;
 }
 
 .accessibility-result-content {
   float: right;
-  width: 85%;
+  width: 80%;
+  padding: 0 10px;
 }

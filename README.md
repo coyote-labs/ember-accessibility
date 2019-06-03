@@ -1,7 +1,10 @@
-access-test-addon
+ember-accessibility
 ==============================================================================
 
-[Short description of the addon.]
+An EmberJS addon to help identify accessibility violations.
+
+This addon uses the [axe-core](https://github.com/dequelabs/axe-core) library
+to audit your apps.
 
 
 Compatibility
@@ -16,14 +19,52 @@ Installation
 ------------------------------------------------------------------------------
 
 ```
-ember install access-test-addon
+ember install ember-accessibility
 ```
 
 
 Usage
 ------------------------------------------------------------------------------
 
-[Longer description of how to use the addon in apps.]
+* In your application template, include the **AccessibilityTester** component.
+  For example,
+  ```handlebars
+  <h1>Welcome to my app!</h1>
+  <AccessibilityTester />
+  ```
+* Start your server/build with the `TEST_ACCESSIBILITY` environment variable
+  set. Example, `TEST_ACCESSIBILITY=true ember s`. This addon's code will be
+  stripped unless this is set.
+* Click on the **Check Accessiblity** button that appears when you visit the app.
+* Fix the errors that are displayed and make your app accessible!
+
+  <img alt="Using Accessibility Tester" src="docs/screenshots/accessibility-tester.gif" width="500">
+
+**Using in engines**
+
+* Make sure you add `ember-accessibility` to the engine's dependencies.
+* Add the `accessibility-test` service to your engine's dependencies in `app.js`.
+
+How is this different from [ember-a11y-testing](https://github.com/ember-a11y/ember-a11y-testing)?
+------------------------------------------------------------------------------
+
+ember-a11y-testing is primarily geared towards testing *as of now*. While this
+will most definitely change, we wanted something that will provide contextual
+and meaningful feedback to developers during the development phase itself.
+
+For example, here is how ember-a11y-testing looks in development currently.
+
+<img alt="ember-a11y-testing screenshot" src="docs/screenshots/ember-a11y-testing.png" width="500">
+
+Notice how all the errors are present on the console. This addon on the other hand
+will make it easier to comprehend those errors.
+
+<img alt="ember-accessibility screenshot" src="docs/screenshots/ember-accessibility.png" width="500">
+
+Another major reason that we wrote this addon is because our tests became
+extremely slow when using ember-a11y-testing. This is a major pain point when
+using it on large projects. By doing a11y testing in development and review
+phases, we were able to avoid that.
 
 
 Contributing

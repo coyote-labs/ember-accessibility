@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import layout from '../templates/components/accessibility-result';
+import { inject as service } from '@ember/service';
 import { htmlSafe } from '@ember/template';
 import { computed } from '@ember/object';
 import { bind, debounce, cancel } from '@ember/runloop';
@@ -12,6 +13,37 @@ export default Component.extend({
   popOverPos: '',
   popOverStyle: '',
   scrollDebounce: 10,
+  accessibilityTest: service('accessibility-test'),
+
+  mouseEnter() {
+    let violatingElement = document.querySelector(this.domElement);
+
+    // handle components that might disappear after audit is run
+    if (!violatingElement) {
+      let { violations } = this.accessibilityTest;
+      this.set('accessibilityTest.violations', violations.without(this.violation));
+
+      return;
+    }
+
+    let rectangle = violatingElement.getBoundingClientRect();
+    this.set('overlayPos', `
+      position: absolute;
+      top: ${rectangle.top}px;
+      left: ${rectangle.left}px;
+      bottom: ${rectangle.bottom}px;
+      right: ${rectangle.right}px;
+      height: ${rectangle.height}px;
+      width: ${rectangle.width}px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 5px;
+      z-index: 2147483635;
+    `);
+  },
+
+  mouseLeave() {
+    this.set('overlayPos', '');
+  },
 
   didInsertElement() {
     this._super(...arguments);
@@ -74,7 +106,8 @@ export default Component.extend({
 
   findPosition() {
     let searchIndex = this.violation.index || 0;
-    let violatedElement = document.querySelector(this.violation.nodes[searchIndex].target[0]);
+    this.set('domElement', this.violation.nodes[searchIndex].target[0]);
+    let violatedElement = document.querySelector(this.domElement);
     let violatedElementPos = this.getOffset(violatedElement);
 
     let impactColors = {

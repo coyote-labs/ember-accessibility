@@ -1,7 +1,7 @@
 <button
   type="button"
   aria-label="Accessibility Issue"
-  title="Accessibility Issue"
+  title={{violation.description}}
   style={{style}}
   class="toggle-accessibility-result" {{action "showDetails"}}>
 </button>
@@ -14,7 +14,7 @@
     </p>
   </div>
   <div class="accessibility-result-content">
-    <h3 class="accessibility-result-title">{{violation.help}}</h3>
+    <strong class="accessibility-result-title">{{violation.help}}</strong>
     <p class="accessibility-result-description">
       {{violation.description}}
       {{violation.impact}}
@@ -25,4 +25,4 @@
   </div>
 </div>
 
-{{yield}}
+<div class="accessbility-result-overlay" style={{overlayPos}}></div>
