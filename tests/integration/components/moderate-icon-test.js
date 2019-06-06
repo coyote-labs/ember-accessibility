@@ -12,15 +12,7 @@ module('Integration | Component | moderate-icon', function(hooks) {
 
     await render(hbs`<ModerateIcon />`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.equal(this.element.textContent.trim(), 'Moderate impact on accessibility');
 
-    // Template block usage:
-    await render(hbs`
-      <ModerateIcon>
-        template block text
-      </ModerateIcon>
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
   });
 });
