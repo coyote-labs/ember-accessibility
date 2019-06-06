@@ -6,5 +6,5 @@ export function initialize() {
 
 export default {
   name: 'ember-accessibility',
-  initialize: initialize
+  initialize
 };

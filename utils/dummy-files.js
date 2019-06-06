@@ -10,13 +10,12 @@ const dummyService = `
   });
 `;
 
-
 const dummyInitializers = `
   export default {
     name: 'ember-accessibility',
     initialize() {}
   };
-`
+`;
 
 const files = {
   'initializers/ember-accessibility.js': dummyInitializers,

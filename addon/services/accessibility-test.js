@@ -1,6 +1,6 @@
 import axe from 'axe-core';
 import Service from '@ember/service';
-import { A } from '@ember/array'
+import { A } from '@ember/array';
 
 export default Service.extend({
   init() {
@@ -18,7 +18,7 @@ export default Service.extend({
           violations.push(axeViolation);
         } else {
           axeViolation.nodes.forEach((node, index) => {
-            let currentElem = { index: index };
+            let currentElem = { index };
             Object.assign(currentElem, axeViolation);
             violations.push(currentElem);
           });
