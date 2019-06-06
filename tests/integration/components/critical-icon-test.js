@@ -12,15 +12,6 @@ module('Integration | Component | critical-icon', function(hooks) {
 
     await render(hbs`<CriticalIcon />`);
 
-    assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
-    await render(hbs`
-      <CriticalIcon>
-        template block text
-      </CriticalIcon>
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    assert.equal(this.element.textContent.trim(), 'Critical impact on accessibility');
   });
 });

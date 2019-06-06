@@ -12,15 +12,6 @@ module('Integration | Component | accessibility-tester', function(hooks) {
 
     await render(hbs`<AccessibilityTester />`);
 
-    assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
-    await render(hbs`
-      <AccessibilityTester>
-        template block text
-      </AccessibilityTester>
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    assert.equal(this.element.textContent.trim(), 'Check Accessibility');
   });
 });

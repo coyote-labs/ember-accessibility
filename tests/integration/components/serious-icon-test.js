@@ -12,15 +12,7 @@ module('Integration | Component | serious-icon', function(hooks) {
 
     await render(hbs`<SeriousIcon />`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.equal(this.element.textContent.trim(), 'Serious impact on accessibility');
 
-    // Template block usage:
-    await render(hbs`
-      <SeriousIcon>
-        template block text
-      </SeriousIcon>
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
   });
 });

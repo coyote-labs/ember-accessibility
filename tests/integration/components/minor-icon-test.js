@@ -12,15 +12,7 @@ module('Integration | Component | minor-icon', function(hooks) {
 
     await render(hbs`<MinorIcon />`);
 
-    assert.equal(this.element.textContent.trim(), '');
+    assert.equal(this.element.textContent.trim(), 'Minor impact on accessibility');
 
-    // Template block usage:
-    await render(hbs`
-      <MinorIcon>
-        template block text
-      </MinorIcon>
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
   });
 });
