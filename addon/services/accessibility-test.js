@@ -1,6 +1,7 @@
-import axe from 'axe-core';
+import axeCore from 'axe-core';
 import Service from '@ember/service';
 import { A } from '@ember/array';
+import config from 'ember-get-config';
 
 export default Service.extend({
   init() {
@@ -9,9 +10,9 @@ export default Service.extend({
   },
 
   async auditWithAxe(element) {
-    let axeResults = await axe.run(element, { restoreScroll: true });
+    let { axe = {} } = config['ember-accessibility'];
+    let axeResults = await axeCore.run(element, axe);
     let violations = [];
-
     if (axeResults.violations.length) {
       axeResults.violations.forEach((axeViolation) => {
         if (axeViolation.nodes.length === 1) {

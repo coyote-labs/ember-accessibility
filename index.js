@@ -5,14 +5,23 @@ const mergeTrees = require('broccoli-merge-trees');
 
 const dummyFiles = require('./utils/dummy-files');
 
-let testAccessibility = process.env.TEST_ACCESSIBILITY;
 let filesTree = [];
 
 module.exports = {
   name: require('./package').name,
 
+  addonOptions: {},
+
+  included(app) {
+    let config = this.project.config();
+    let options = config[this.name] || {};
+    this.addonOptions = options;
+
+    this._super.included.apply(this, app);
+  },
+
   treeForApp(tree) {
-    if (!testAccessibility) {
+    if (!this.addonOptions.isEnabled) {
       for (let file in dummyFiles) {
         filesTree.push(writeFile(file, dummyFiles[file]));
       }
@@ -24,7 +33,7 @@ module.exports = {
   },
 
   treeForAddon(tree) {
-    if (!testAccessibility) {
+    if (!this.addonOptions.isEnabled) {
       return;
     }
 
