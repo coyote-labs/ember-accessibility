@@ -5,6 +5,9 @@ import { htmlSafe } from '@ember/template';
 import { computed } from '@ember/object';
 import { bind, debounce, cancel } from '@ember/runloop';
 
+import findScrollContainer from 'ember-accessibility/utils/find-scroll-container';
+import getPopoverPosition from 'ember-accessibility/utils/get-popover-position';
+
 export default Component.extend({
   layout,
   tagName: 'span',
@@ -48,6 +51,7 @@ export default Component.extend({
 
   didInsertElement() {
     this._super(...arguments);
+
     this._listen();
     this.findPosition();
   },
@@ -57,18 +61,17 @@ export default Component.extend({
     return `${impact.toLowerCase()}-icon`;
   }),
 
-  getOffset(el) {
-    return el.getBoundingClientRect();
-  },
-
   willDestroyElement() {
     this._super(...arguments);
     this._stopListening();
   },
 
   _listen() {
-    this.set('_scrollHandler', bind(this, '_scroll'));
-    this.set('_clickHandler', bind(this, '_outsideClick'));
+    this.setProperties({
+      _scrollHandler: bind(this, '_scroll'),
+      _clickHandler: bind(this, '_outsideClick')
+    });
+
     this._listener().addEventListener('scroll', this._scrollHandler);
     document.addEventListener('click', this._clickHandler);
   },
@@ -82,7 +85,7 @@ export default Component.extend({
   _listener() {
     let searchIndex = this.violation.index || 0;
     let node = document.querySelector(this.violation.nodes[searchIndex].target[0]);
-    this.scrollParentElement = this.findScrollElement(node);
+    this.scrollParentElement = findScrollContainer(node);
     if (this.scrollParentElement) {
       return this.scrollParentElement;
     }
@@ -95,7 +98,7 @@ export default Component.extend({
   },
 
   _outsideClick(e) {
-    let target = e.target;
+    let { target } = e;
     if (!target.closest(`#${this.elementId}`)) {
       this.set('canShowDetails', false);
     }
@@ -109,7 +112,7 @@ export default Component.extend({
     let searchIndex = this.violation.index || 0;
     this.set('domElement', this.violation.nodes[searchIndex].target[0]);
     let violatedElement = document.querySelector(this.domElement);
-    let violatedElementPos = this.getOffset(violatedElement);
+    let violatedElementPos = violatedElement.getBoundingClientRect();
 
     let impactColors = {
       critical: '#d0021b',
@@ -128,43 +131,20 @@ export default Component.extend({
 
     failureSummary = failureSummary.split('\n');
 
-    failureSummary = failureSummary.map(failure => {
-      if(failure.length) {
-        if(failure.includes('Fix all of the following') || failure.includes('Fix any of the following')) {
+    failureSummary = failureSummary.map((failure) => {
+      if (failure.length) {
+        if (failure.includes('Fix all of the following') || failure.includes('Fix any of the following')) {
           return htmlSafe(`<b>${failure}</b>`);
         }
+
         return htmlSafe(`<li>${failure}</li>`);
       }
     });
 
-    this.set('failureSummary', failureSummary);
-
-    this.set('style', htmlSafe(currentStyleEle));
-  },
-
-  styleElem(node, prop) {
-    return getComputedStyle(node, null).getPropertyValue(prop);
-  },
-
-  scrollElem(node) {
-    let regex = /(auto|scroll)/;
-    return regex.test(
-      this.styleElem(node, 'overflow') +
-      this.styleElem(node, 'overflow-y') +
-      this.styleElem(node, 'overflow-x')
-    );
-  },
-
-  findScrollElement(node) {
-    if (!node || node === document.body) {
-      return document;
-    }
-
-    if (this.scrollElem(node)) {
-      return node;
-    }
-
-    return this.findScrollElement(node.parentNode);
+    this.setProperties({
+      failureSummary,
+      style: htmlSafe(currentStyleEle)
+    });
   },
 
   actions: {
@@ -172,26 +152,16 @@ export default Component.extend({
       if (this.toggleProperty('canShowDetails')) {
         let popOverElem = this.element.querySelector(`[violation-id='${this.violation.id}']`);
         let buttonElem = this.element.querySelector('button');
-        let buttonElemPos = this.getOffset(buttonElem);
 
-        let topPos = buttonElemPos.top - ( popOverElem.clientHeight / 2 ) + ( buttonElemPos.height *  0.5 ) + window.scrollY;
-        let leftRightPos = buttonElemPos.left - popOverElem.clientWidth - ( buttonElemPos.width *  0.5 );
-        let arrowPos = '';
-
-        if (topPos < 0) {
-          arrowPos = buttonElemPos.top + ( buttonElemPos.height *  0.5 );
-          topPos = 0;
-        }
-
-        let calcPopOverPos = buttonElemPos.left + popOverElem.clientWidth;
-        if(calcPopOverPos > window.innerWidth) {
-          this.set('popOverPos', 'left');
-        } else {
-          leftRightPos = buttonElemPos.left + ( buttonElemPos.width * 1.5 );
-          this.set('popOverPos', 'right');
-        }
+        let {
+          popOverPos,
+          topPos,
+          leftRightPos,
+          arrowPos
+        } = getPopoverPosition(popOverElem, buttonElem);
 
         this.setProperties({
+          popOverPos,
           popOverStyle: `top:${topPos}px;left:${leftRightPos}px`,
           arrowPos: `top:${arrowPos}px`
         });

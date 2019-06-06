@@ -20,7 +20,7 @@ Component.reopen({
 
   didInsertElement() {
     this._super(...arguments);
-    if(!this.isAccessibilityTest) {
+    if (!this.isAccessibilityTest) {
       this._runAudit();
     }
   },
@@ -30,4 +30,4 @@ Component.reopen({
       this.accessibilityTest.getViolations(this.element);
     }
   }
-})
+});
