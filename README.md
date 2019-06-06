@@ -32,9 +32,25 @@ Usage
   <h1>Welcome to my app!</h1>
   <AccessibilityTester />
   ```
-* Start your server/build with the `TEST_ACCESSIBILITY` environment variable
-  set. Example, `TEST_ACCESSIBILITY=true ember s`. This addon's code will be
-  stripped unless this is set.
+* In your `config/environment.js`, provide an `ember-accessibility` object that has
+  the following fields.
+
+  `isEnabled`: Defaults to `false`. You can set it to `environment === 'development'`.
+  This addon's code will be stripped unless this is set to `true`.
+
+  `axe`: Allows configuring axe-core. Refer axe-core's [documentation](https://www.deque.com/axe/axe-for-web/documentation/api-documentation/#options-parameter).
+
+  ```javascript
+  // config/environment.js
+  let ENV = {
+    'ember-accessibility': {
+      isEnabled: environment === 'development',
+      axe: {
+        restoreScroll: true
+      }
+    }
+  };
+  ```
 * Click on the **Check Accessiblity** button that appears when you visit the app.
 * Fix the errors that are displayed and make your app accessible!
 
