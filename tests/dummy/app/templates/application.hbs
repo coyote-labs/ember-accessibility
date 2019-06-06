@@ -1,14 +1,17 @@
 <div style="text-align: center">
-  <h1 style="color:cyan">Accessibility Tester</h1>
-  <h1>Identifies accessibility issues in your Ember applications.</h1>
+  <h1 style="color:cyan">ember-accessibility</h1>
+  <h1>Identify accessibility issues during development!</h1>
 
-  {{!-- <img src="https://picsum.photos/500/500"> --}}
+  <img src="https://source.unsplash.com/gWFXgcH-LeU/800x450">
 
   <br>
 
   <button class="empty-btn"></button>
 
-  <ClickToDisplay />
+  <button type="button" {{action "toggle"}}>Click to display some text</button>
+  {{#if canShowComponent}}
+    <FaintText />
+  {{/if}}
 </div>
 
 <AccessibilityTester />
