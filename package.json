@@ -1,6 +1,6 @@
 {
   "name": "ember-accessibility",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "An EmberJS addon to help identify accessibility violations",
   "keywords": [
     "ember-addon"
