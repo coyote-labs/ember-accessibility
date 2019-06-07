@@ -5,8 +5,8 @@ import { htmlSafe } from '@ember/template';
 import { computed } from '@ember/object';
 import { bind, debounce, cancel } from '@ember/runloop';
 
-import findScrollContainer from 'ember-accessibility/utils/find-scroll-container';
-import getPopoverPosition from 'ember-accessibility/utils/get-popover-position';
+import findScrollContainer from '@coyote-labs/ember-accessibility/utils/find-scroll-container';
+import getPopoverPosition from '@coyote-labs/ember-accessibility/utils/get-popover-position';
 
 const impactColors = {
   critical: 'rgb(220, 53, 69, 0.5)',
