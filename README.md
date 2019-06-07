@@ -20,7 +20,7 @@ Installation
 ------------------------------------------------------------------------------
 
 ```
-ember install ember-accessibility
+ember install @coyote-labs/ember-accessibility
 ```
 
 
