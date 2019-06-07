@@ -1,1 +1,1 @@
-export { default } from 'ember-accessibility/components/toggle-result';
+export { default } from '@coyote-labs/ember-accessibility/components/toggle-result';

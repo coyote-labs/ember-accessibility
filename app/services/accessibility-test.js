@@ -1,1 +1,1 @@
-export { default } from 'ember-accessibility/services/accessibility-test';
+export { default } from '@coyote-labs/ember-accessibility/services/accessibility-test';

@@ -1,5 +1,5 @@
 {
-  "name": "ember-accessibility",
+  "name": "@coyote-labs/ember-accessibility",
   "version": "1.0.0",
   "description": "An EmberJS addon to help identify accessibility violations",
   "keywords": [

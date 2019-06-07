@@ -1,1 +1,1 @@
-export { default } from 'ember-accessibility/components/moderate-icon';
+export { default } from '@coyote-labs/ember-accessibility/components/moderate-icon';
