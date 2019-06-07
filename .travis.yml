@@ -8,10 +8,6 @@ node_js:
 sudo: false
 dist: trusty
 
-git:
-  depth: false
-
-
 addons:
   chrome: stable
 
@@ -44,6 +40,7 @@ jobs:
         - npm run lint:hbs
         - npm run lint:js
         - npm test
+        - npm run build -- -prod
 
     # we recommend new addons test the current and previous LTS
     # as well as latest stable release (bonus points to beta/canary)
@@ -56,10 +53,13 @@ jobs:
     - env: EMBER_TRY_SCENARIO=ember-default-with-jquery
       script:
         - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO
+
 deploy:
   provider: pages
   skip-cleanup: true
   github-token: $GITHUB_TOKEN
   keep-history: true
   local-dir: dist
-  verbose: truer
+  verbose: true
+  on:
+    branch: master
