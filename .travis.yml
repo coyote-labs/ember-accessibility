@@ -52,12 +52,6 @@ jobs:
     - env: EMBER_TRY_SCENARIO=ember-default-with-jquery
       script:
         - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO
-
-stages:
-  - name: deploy
-    script:
-      - yarn test
-      - yarn run lint:hbs
-      - yarn run lint:js
-      - yarn deploy
-    # require the branch name to be master (note for PRs this is the base branch name)
+    - stage: "deploy"
+      script:
+        - yarn deploy
