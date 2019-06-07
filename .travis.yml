@@ -56,7 +56,10 @@ jobs:
     - env: EMBER_TRY_SCENARIO=ember-default-with-jquery
       script:
         - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO
-    - stage: "deploy"
-      script:
-        - yarn deploy
-      if: branch = master
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  keep-history: true
+  local-dir: dist
+  verbose: truer
