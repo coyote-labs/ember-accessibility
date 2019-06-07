@@ -63,3 +63,4 @@ deploy:
   verbose: true
   on:
     branch: master
+    condition: "$TRAVIS_BUILD_STAGE_NAME = Tests"
