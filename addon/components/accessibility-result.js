@@ -8,6 +8,13 @@ import { bind, debounce, cancel } from '@ember/runloop';
 import findScrollContainer from 'ember-accessibility/utils/find-scroll-container';
 import getPopoverPosition from 'ember-accessibility/utils/get-popover-position';
 
+const impactColors = {
+  critical: 'rgb(220, 53, 69, 0.5)',
+  serious: 'rgb(255, 153, 102, 0.5)',
+  moderate: 'rgb(255, 204, 0, 0.5)',
+  minor: 'rgb(23, 162, 184, 0.5)'
+};
+
 export default Component.extend({
   layout,
   tagName: 'span',
@@ -114,23 +121,17 @@ export default Component.extend({
     let violatedElement = document.querySelector(this.domElement);
     let violatedElementPos = violatedElement.getBoundingClientRect();
 
-    let impactColors = {
-      critical: '#d0021b',
-      serious: '#f5a623',
-      moderate: '#f5a623',
-      minor: '#4a90e2'
-    };
-
+    let color = impactColors[this.violation.impact];
     let currentStyleEle = `
-      position : absolute;
+      position: absolute;
       top: ${violatedElementPos.top + window.scrollY}px;
       left: ${violatedElementPos.left + window.scrollX}px;
-      background: ${impactColors[this.violation.impact]};
+      background: ${color};
+      border: 2px solid ${color.replace(', 0.5', '')}
     `;
+
     let failureSummary = this.violation.nodes[searchIndex].failureSummary || [];
-
     failureSummary = failureSummary.split('\n');
-
     failureSummary = failureSummary.map((failure) => {
       if (failure.length) {
         if (failure.includes('Fix all of the following') || failure.includes('Fix any of the following')) {
