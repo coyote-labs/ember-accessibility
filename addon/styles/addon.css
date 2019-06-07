@@ -1,8 +1,7 @@
 .toggle-accessibility-result {
   display: inline-block;
-  border: 1px solid #eee;
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   border-radius: 100%;
   z-index: 2147483637;
 }
@@ -21,6 +20,7 @@
   -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
   box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
   z-index: 2147483638;
+  border-radius: 20px;
 }
 
 .accessibility-result-popover.show {
@@ -140,7 +140,7 @@
   display: inline-block;
   padding: 0.7rem 1.4rem;
   margin: 0 0.3rem 0.3rem 0;
-  border-radius: 0.15rem;
+  border-radius: 25px;
   text-transform: uppercase;
   font-weight: 400;
   color: #FFFFFF;
