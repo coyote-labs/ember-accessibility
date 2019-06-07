@@ -12,12 +12,26 @@ module.exports = {
 
   addonOptions: {},
 
-  included(app) {
-    let config = this.project.config();
-    let options = config[this.name] || {};
-    this.addonOptions = options;
+  included() {
+    let app;
 
-    this._super.included.apply(this, app);
+    // If the addon has the _findHost() method (in ember-cli >= 2.7.0), we'll just
+    // use that.
+    if (typeof this._findHost === 'function') {
+      app = this._findHost();
+    } else {
+      // Otherwise, we'll use this implementation borrowed from the _findHost()
+      // method in ember-cli.
+      let current = this;
+      do {
+        app = current.app || app;
+      } while (current.parent.parent && (current = current.parent));
+    }
+
+    this.app = app;
+    this.addonOptions = this.app.project.config(app.env)['ember-accessibility'] || {};
+
+    this._super.included.apply(this, arguments);
   },
 
   treeForApp(tree) {
