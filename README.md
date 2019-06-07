@@ -6,6 +6,7 @@ An EmberJS addon to help identify accessibility violations.
 This addon uses the [axe-core](https://github.com/dequelabs/axe-core) library
 to audit your apps.
 
+[DEMO](https://coyote-labs.github.io/ember-accessibility/)
 
 Compatibility
 ------------------------------------------------------------------------------
