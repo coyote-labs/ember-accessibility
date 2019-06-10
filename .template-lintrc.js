@@ -2,6 +2,8 @@
 
 module.exports = {
   extends: 'recommended',
-  'no-inline-styles': false,
-  'img-alt-attributes': false
+  rules: {
+    'no-inline-styles': false,
+    'img-alt-attributes': false
+  }
 };
