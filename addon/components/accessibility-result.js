@@ -116,9 +116,17 @@ export default Component.extend({
   },
 
   findPosition() {
+    if (this.isDestroyed) {
+      return;
+    }
+
     let searchIndex = this.violation.index || 0;
     this.set('domElement', this.violation.nodes[searchIndex].target[0]);
     let violatedElement = document.querySelector(this.domElement);
+    if (!violatedElement) {
+      return;
+    }
+
     let violatedElementPos = violatedElement.getBoundingClientRect();
 
     let color = impactColors[this.violation.impact];
