@@ -8,7 +8,7 @@
 
   <button class="empty-btn"></button>
 
-  <button type="button" {{action "toggle"}}>Click to display some text</button>
+  <button type="button" {{action "toggle"}} data-toggle="display-text">Click to display some text</button>
   {{#if canShowComponent}}
     <FaintText />
   {{/if}}

@@ -92,9 +92,9 @@ export default Component.extend({
   _listener() {
     let searchIndex = this.violation.index || 0;
     let node = document.querySelector(this.violation.nodes[searchIndex].target[0]);
-    this.scrollParentElement = findScrollContainer(node);
-    if (this.scrollParentElement) {
-      return this.scrollParentElement;
+    let scrollParentElement = findScrollContainer(node);
+    if (scrollParentElement) {
+      return scrollParentElement;
     }
 
     return this.element;
