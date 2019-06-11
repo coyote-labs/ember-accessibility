@@ -11,8 +11,17 @@ export default Service.extend({
 
   async auditWithAxe(element) {
     let { axe = {} } = config['ember-accessibility'];
-    let axeResults = await axeCore.run(element, axe);
     let violations = [];
+    let axeResults;
+
+    try {
+      axeResults = await axeCore.run(element, axe);
+    } catch({ message }) {
+      // eslint-disable-next-line no-console
+      console.warn(`[ember-accessibility] ${message}`);
+      return violations;
+    }
+
     if (axeResults.violations.length) {
       axeResults.violations.forEach((axeViolation) => {
         if (axeViolation.nodes.length === 1) {
