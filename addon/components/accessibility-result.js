@@ -22,7 +22,7 @@ export default Component.extend({
   style: '',
   popOverPos: '',
   popOverStyle: '',
-  scrollDebounce: 10,
+  scrollDebounce: 150,
   accessibilityTest: service('accessibility-test'),
   isAccessibilityTest: true,
 
