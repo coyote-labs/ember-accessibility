@@ -3942,14 +3942,14 @@ function r(e){return function(e){if(Array.isArray(e)){for(var t=0,n=new Array(e.
 return n}}(e)||function(e){if(Symbol.iterator in Object(e)||"[object Arguments]"===Object.prototype.toString.call(e))return Array.from(e)}(e)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance")}()}function i(e,t,n,r,i,o,a){try{var s=e[o](a),u=s.value}catch(l){return void n(l)}s.done?t(u):Promise.resolve(u).then(r,i)}function o(e){return function(){var t=this,n=arguments
 return new Promise(function(r,o){var a=e.apply(t,n)
 function s(e){i(a,r,o,s,u,"next",e)}function u(e){i(a,r,o,s,u,"throw",e)}s(void 0)})}}Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0
-var a=Ember.Service.extend({init:function(){this._super.apply(this,arguments),this.violations=Ember.A()},auditWithAxe:function(){var e=o(regeneratorRuntime.mark(function e(r){var i,o,a,s,u
-return regeneratorRuntime.wrap(function(e){for(;;)switch(e.prev=e.next){case 0:return i=n.default["ember-accessibility"].axe,o=void 0===i?{}:i,a=[],e.prev=2,e.next=5,t.default.run(r,o)
-case 5:s=e.sent,e.next=13
+var a=Ember.Service.extend({init:function(){this._super.apply(this,arguments),this.violations=Ember.A()},auditWithAxe:function(){var e=o(regeneratorRuntime.mark(function e(r){var i,o,a,s,u,l
+return regeneratorRuntime.wrap(function(e){for(;;)switch(e.prev=e.next){case 0:return i=n.default["ember-accessibility"].axe,o=void 0===i?{}:i,a=Object.assign({resultTypes:["violations"]},o),s=[],e.prev=3,e.next=6,t.default.run(r,a)
+case 6:u=e.sent,e.next=14
 break
-case 8:return e.prev=8,e.t0=e.catch(2),u=e.t0.message,console.warn("[ember-accessibility] ".concat(u)),e.abrupt("return",a)
-case 13:return s.violations.length&&s.violations.forEach(function(e){1===e.nodes.length?a.push(e):e.nodes.forEach(function(t,n){var r={index:n}
-Object.assign(r,e),a.push(r)})}),e.abrupt("return",a)
-case 15:case"end":return e.stop()}},e,null,[[2,8]])}))
+case 9:return e.prev=9,e.t0=e.catch(3),l=e.t0.message,console.warn("[ember-accessibility] ".concat(l)),e.abrupt("return",s)
+case 14:return u.violations.length&&u.violations.forEach(function(e){1===e.nodes.length?s.push(e):e.nodes.forEach(function(t,n){var r={index:n}
+Object.assign(r,e),s.push(r)})}),e.abrupt("return",s)
+case 16:case"end":return e.stop()}},e,null,[[3,9]])}))
 return function(t){return e.apply(this,arguments)}}(),getViolations:function(){var e=o(regeneratorRuntime.mark(function e(){var t,n,i=arguments
 return regeneratorRuntime.wrap(function(e){for(;;)switch(e.prev=e.next){case 0:return t=i.length>0&&void 0!==i[0]?i[0]:document.querySelector("body"),e.next=3,this.auditWithAxe(t)
 case 3:n=e.sent,this.isEnabled&&(n=Ember.A([].concat(r(this.violations),r(n)))),this.set("violations",n)
