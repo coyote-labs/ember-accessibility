@@ -1,4 +1,7 @@
-<ToggleResult />
+<ToggleResult
+  data-action="toggle-results"
+  @preventToggle={{preventToggle}}
+  style={{position}} />
 
 {{#each accessibilityTest.violations as |violation|}}
   <AccessibilityResult data-test-title="accessibility-result" @violation={{violation}} />
