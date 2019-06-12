@@ -62,6 +62,44 @@ Usage
 * Make sure you add `ember-accessibility` to the engine's dependencies.
 * Add the `accessibility-test` service to your engine's dependencies in `app.js`.
 
+
+**Using in test**
+
+- Import the `auditAccessibility()` helper from `'@coyote-labs/ember-accessibility/test-support/audit';` and then invoke it where needed.
+
+> Note: The config passed in `config/environment.js` will be applied here as well.
+
+##### Acceptance Tests
+
+```javascript
+import auditAccessibility from '@coyote-labs/ember-accessibility/test-support/audit';
+
+test('Checks accessibility violations', function(assert) {
+  visit('/');
+  assert.notOk(await auditAccessibility());
+});
+```
+Or, you can pass any selector or element from the visited page.
+
+```javascript
+import auditAccessibility from '@coyote-labs/ember-accessibility/test-support/audit';
+
+test('Checks accessibility violations', function(assert) {
+  visit('/');
+  assert.notOk(await auditAccessibility('#someID'));
+});
+```
+##### Integration / Unit Tests
+
+```javascript
+import auditAccessibility from '@coyote-labs/ember-accessibility/test-support/audit';
+
+test('Checks accessibility violations in component', function(assert) {
+  await render(hbs`<AccessibilityTester />`);  
+  assert.notOk(await auditAccessibility(this.element));
+});
+```
+
 How is this different from [ember-a11y-testing](https://github.com/ember-a11y/ember-a11y-testing)?
 ------------------------------------------------------------------------------
 
