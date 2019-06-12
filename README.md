@@ -65,38 +65,38 @@ Usage
 
 **Using in test**
 
-- Import `accessibilityTester` async function from `'@coyote-labs/ember-accessibility/test-support/audit';` and then call it.
+- Import the `auditAccessibility()` helper from `'@coyote-labs/ember-accessibility/test-support/audit';` and then invoke it where needed.
 
-> Note: Same config passed in `config/environment.js` will be applied here.
+> Note: The config passed in `config/environment.js` will be applied here as well.
 
 ##### Acceptance Tests
 
 ```javascript
-import accessibilityTester from '@coyote-labs/ember-accessibility/test-support/audit';
+import auditAccessibility from '@coyote-labs/ember-accessibility/test-support/audit';
 
 test('Checks accessibility violations', function(assert) {
   visit('/');
-  assert.notOk(await accessibilityTester());
+  assert.notOk(await auditAccessibility());
 });
 ```
-Or you can pass any selector from the visited page.
+Or, you can pass any selector or element from the visited page.
 
 ```javascript
-import accessibilityTester from '@coyote-labs/ember-accessibility/test-support/audit';
+import auditAccessibility from '@coyote-labs/ember-accessibility/test-support/audit';
 
 test('Checks accessibility violations', function(assert) {
   visit('/');
-  assert.notOk(await accessibilityTester('#someID'));
+  assert.notOk(await auditAccessibility('#someID'));
 });
 ```
 ##### Integration / Unit Tests
 
 ```javascript
-import accessibilityTester from '@coyote-labs/ember-accessibility/test-support/audit';
+import auditAccessibility from '@coyote-labs/ember-accessibility/test-support/audit';
 
 test('Checks accessibility violations in component', function(assert) {
   await render(hbs`<AccessibilityTester />`);  
-  assert.notOk(await accessibilityTester(this.element));
+  assert.notOk(await auditAccessibility(this.element));
 });
 ```
 
