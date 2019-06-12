@@ -7,6 +7,12 @@
   transition: 200ms all linear;
 }
 
+.toggle-accessibility-result:focus,
+.toggle-accessibility-result:active {
+  outline: none;
+  transform: scale(1.2);
+}
+
 .accessibility-result-popover {
   visibility: hidden;
   position: absolute;
@@ -178,8 +184,6 @@
   text-align: center;
 }
 
-.accessibility-result-impact > h3 {
-}
 .accessibility-result-impact > p {
   padding: 0;
   margin: 0;
@@ -192,12 +196,10 @@
   padding: 0 10px;
 }
 
-
 .accessibility-result-summary > ul {
   list-style-position: inside;
   padding: 0;
 }
-
 
 .accessibility-result-summary > ul > li {
   padding: 10px;
