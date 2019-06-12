@@ -132,8 +132,6 @@
   cursor: pointer;
   display: inline-block;
   position: fixed;
-  top: 100px;
-  right: 5%;
   z-index: 2147483636;
 }
 
@@ -150,6 +148,7 @@
   position: relative;
   outline: none;
   border: none;
+  min-width: 200px;
 }
 
 .accessibility-toggle-results svg {

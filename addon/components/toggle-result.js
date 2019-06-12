@@ -8,7 +8,11 @@ export default Component.extend({
   classNames: ['accessibility-toggle-results'],
   accessibilityTest: service('accessibility-test'),
 
-  async click() {
+  async mouseUp() {
+    if (this.preventToggle) {
+      return;
+    }
+
     if (this.accessibilityTest.isEnabled) {
       this.accessibilityTest.setProperties({
         'violations': [],
