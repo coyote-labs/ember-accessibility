@@ -47,8 +47,10 @@ export default Component.extend({
     this._super(...arguments);
   },
 
-  dragStart() {
-    this.set('isDragging', true);
+  dragStart(e) {
+    if (e.target && e.target.dataset && e.target.dataset.testAction === 'check-accessibility') {
+      this.set('isDragging', true);
+    }
   },
 
   dragEnd() {
