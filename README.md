@@ -53,6 +53,17 @@ Usage
   };
   ```
 * Click on the **Check Accessiblity** button that appears when you visit the app.
+
+* If you want to change the default position of the toggle, pass top and left position values to the `AccessibilityTester` component.
+
+  Note: Values are in pixels.
+
+  For example,
+  ```handlebars
+  <h1>Welcome to my app!</h1>
+  <AccessibilityTester @top="25" @left="750"/>
+  ```
+
 * Fix the errors that are displayed and make your app accessible!
 
   <img alt="Using Accessibility Tester" src="docs/screenshots/accessibility-tester.gif" width="500">
