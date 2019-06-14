@@ -1,12 +1,18 @@
 <button
   type="button"
   aria-label="Scan Accessibility Issues"
-  title="Scan Accessibility Issues"
-  data-test-action="check-accessibility">
-  <svg class={{if isAuditing "accessibility-spin"}} xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-  {{#if accessibilityTest.violations}}
-    Hide Accessibility Violations
-  {{else}}
-    Check Accessibility
-  {{/if}}
+  title="Scan Accessibility Issues">
+  <svg
+    class="{{if isAuditing "accessibility-pulse"}} {{if accessibilityTest.violations "active"}}"
+    data-test-action="check-accessibility"
+    xmlns="http://www.w3.org/2000/svg"
+    width="60"
+    height="60"
+    stroke="#fff"
+    viewBox="0 0 60 60">
+    <g fill="#fff">
+      <path
+        d="M30 21a6 6 0 1 0 0-12 6 6 0 0 0 0 12zm0-10a4 4 0 1 1 0 8 4 4 0 0 1 0-8zM43.927 22.008h-.016l-10.5.943c-.358.033-.716.049-1.075.049h-4.672c-.358 0-.716-.016-1.073-.048l-10.518-.944a3 3 0 1 0-.47 5.982l8.487.77a1 1 0 0 1 .91.995v2.3c0 .5-.093.996-.276 1.461l-4.812 12.255A3 3 0 1 0 25.4 48.2l4.586-11.213 4.629 11.243a3 3 0 0 0 5.49-2.417l-4.829-12.3A4 4 0 0 1 35 32.054v-2.3a1 1 0 0 1 .91-.995l8.473-.769a3 3 0 0 0-.456-5.983v.001zM44.216 26l-8.487.77A2.985 2.985 0 0 0 33 29.755v2.3c0 .75.14 1.494.415 2.193l4.846 12.339a1 1 0 1 1-1.809.853l-4.619-11.213a1.983 1.983 0 0 0-3.666 0L23.561 47.41a1 1 0 1 1-1.8-.866l4.829-12.3c.273-.698.412-1.44.41-2.19v-2.3a2.985 2.985 0 0 0-2.729-2.987L15.77 26a1.002 1.002 0 0 1 .141-2l10.5.943c.416.037.833.056 1.251.056h4.672c.418 0 .835-.019 1.251-.056L44.08 24a.994.994 0 0 1 1.07.921A1 1 0 0 1 44.216 26z" />
+    </g>
+  </svg>
 </button>

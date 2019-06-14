@@ -126,18 +126,19 @@
 }
 
 .accessibility-toggle-results button {
-  padding: 0.7rem 1.4rem;
-  margin: 0 0.3rem 0.3rem 0;
-  border-radius: 25px;
-  text-transform: uppercase;
-  font-weight: 400;
-  color: #FFFFFF;
+  padding: 0;
+  margin: 0;
+  border-radius: 50%;
   background-color: #3369ff;
   text-align: center;
-  position: relative;
   outline: none;
   border: none;
-  min-width: 200px;
+  transition: 5s linear all;
+}
+
+.accessibility-toggle-results .active {
+  background-color: #0945ea;
+  border-radius: 50%;
 }
 
 .accessibility-toggle-results svg {
@@ -150,13 +151,16 @@
   padding: 25px 5px;
 }
 
-.accessibility-spin {
-  animation: spin 1s linear infinite;
+.accessibility-pulse {
+  animation: pulse 2s linear infinite;
 }
 
-@keyframes spin {
+@keyframes pulse {
+  50% {
+    transform: scale(1.1);
+  }
   100% {
-    transform: rotate(360deg);
+    transform: scale(1);
   }
 }
 
