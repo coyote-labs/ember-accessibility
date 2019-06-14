@@ -21,10 +21,6 @@ const files = {
   'initializers/ember-accessibility.js': dummyInitializers,
   'components/accessibility-result.js': dummyComponent,
   'components/accessibility-tester.js': dummyComponent,
-  'components/critical-icon.js': dummyComponent,
-  'components/minor-icon.js': dummyComponent,
-  'components/moderate-icon.js': dummyComponent,
-  'components/serious-icon.js': dummyComponent,
   'components/toggle-result.js': dummyComponent,
   'services/accessibility-test.js': dummyService
 };

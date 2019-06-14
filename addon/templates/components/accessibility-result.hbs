@@ -7,18 +7,14 @@
 </button>
 
 <div class="accessibility-result-popover accessibility-result {{popOverPos}} {{if canShowDetails "show"}}" violation-id={{violation.id}} style={{popOverStyle}}>
-  <div class="arrow" style={{arrowPos}}></div>
-  <div class="accessibility-result-impact">
-    <p>
-      {{component impactIcon}}
-    </p>
-  </div>
+  <div class="arrow {{impact}}" style={{arrowPos}}></div>
   <div class="accessibility-result-content">
-    <strong class="accessibility-result-title">{{violation.help}}</strong>
+    <h1>{{violation.help}}</h1>
+    {{#if violation.component}}
+      <span class="accessibility-result-component">{{violation.component}}</span>
+    {{/if}}
     <p class="accessibility-result-description">
-      {{violation.description}}.
-      <br><br>
-      <a href={{violation.helpUrl}} target="_blank" rel="noopener">Read More</a>
+      {{violation.description}}. <a href={{violation.helpUrl}} target="_blank" rel="noopener">Read More</a>
     </p>
     <p class="accessibility-result-summary">
       <ul>

@@ -11,7 +11,8 @@ Route.reopen({
 
     this.accessibilityTest.setProperties({
       isEnabled: false,
-      violations: []
+      violations: [],
+      renderedComponents: []
     });
   })
 });
@@ -36,8 +37,15 @@ Component.reopen({
     if (this.accessibilityTest.isEnabled && !this.isDestroyed) {
       let { element } = this;
       if (element) {
-        this.accessibilityTest.getViolations(element);
+        this.accessibilityTest.getViolations(element, this._debugContainerKey);
       }
+    }
+
+    if (!this.accessibilityTest.isEnabled) {
+      this.accessibilityTest.set('renderedComponents', [
+        ...this.accessibilityTest.renderedComponents,
+        { name: this._debugContainerKey, id: this.elementId }
+      ]);
     }
   }
 });
