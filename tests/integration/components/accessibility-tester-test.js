@@ -12,6 +12,9 @@ module('Integration | Component | accessibility-tester', function(hooks) {
 
     await render(hbs`<AccessibilityTester />`);
 
-    assert.equal(this.element.textContent.trim(), 'Check Accessibility');
+    assert.equal(
+      this.element.querySelector('[data-test-action="check-accessibility"]').tagName,
+      'svg'
+    );
   });
 });
