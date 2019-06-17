@@ -2,9 +2,9 @@
   type="button"
   aria-label="Scan Accessibility Issues"
   title={{if accessibilityTest.violations "Disable Accessibility Issues" "Scan Accessibility Issues"}}
-  class="{{if accessibilityTest.violations "active"}}">
+  class={{if accessibilityTest.violations "active"}}>
   <svg
-    class="{{if isAuditing "accessibility-pulse"}}"
+    class={{if isAuditing "accessibility-pulse"}}
     data-test-action="check-accessibility"
     xmlns="http://www.w3.org/2000/svg"
     width="60"
