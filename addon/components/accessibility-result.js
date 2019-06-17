@@ -7,6 +7,7 @@ import { bind, debounce, cancel } from '@ember/runloop';
 
 import findScrollContainer from '@coyote-labs/ember-accessibility/utils/find-scroll-container';
 import getPopoverPosition from '@coyote-labs/ember-accessibility/utils/get-popover-position';
+import { applyStyles, resetStyles } from '@coyote-labs/ember-accessibility/utils/element-style';
 
 const impactColors = {
   critical: 'rgb(220, 53, 69, 0.5)',
@@ -38,22 +39,23 @@ export default Component.extend({
     }
 
     let rectangle = violatingElement.getBoundingClientRect();
-    this.set('overlayPos', `
-      position: absolute;
-      top: ${rectangle.top + window.scrollY}px;
-      left: ${rectangle.left + window.scrollX}px;
-      bottom: ${rectangle.bottom}px;
-      right: ${rectangle.right}px;
-      height: ${rectangle.height}px;
-      width: ${rectangle.width}px;
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 5px;
-      z-index: 2147483635;
-    `);
+
+    applyStyles(this.element.querySelector('.accessbility-result-overlay'), {
+      'position': 'absolute',
+      'top': `${rectangle.top + window.scrollY}px`,
+      'left': `${rectangle.left + window.scrollX}px`,
+      'bottom': `${rectangle.bottom}px`,
+      'right': `${rectangle.right}px`,
+      'height': `${rectangle.height}px`,
+      'width': `${rectangle.width}px`,
+      'background': 'rgba(0, 0, 0, 0.3)',
+      'border-radius': '5px',
+      'z-index': '2147483635'
+    });
   },
 
   mouseLeave() {
-    this.set('overlayPos', '');
+    resetStyles(this.element.querySelector('.accessbility-result-overlay'));
   },
 
   didInsertElement() {
@@ -130,13 +132,13 @@ export default Component.extend({
     let violatedElementPos = violatedElement.getBoundingClientRect();
 
     let color = impactColors[this.violation.impact];
-    let currentStyleEle = `
-      position: absolute;
-      top: ${violatedElementPos.top + window.scrollY}px;
-      left: ${violatedElementPos.left + window.scrollX}px;
-      background: ${color};
-      border: 2px solid ${color.replace(', 0.5', '')}
-    `;
+    let currentStyleEle = {
+      'position': 'absolute',
+      'top': `${violatedElementPos.top + window.scrollY}px`,
+      'left': `${violatedElementPos.left + window.scrollX}px`,
+      'background': color,
+      'border': `2px solid ${color.replace(', 0.5', '')}`
+    };
 
     let failureSummary = this.violation.nodes[searchIndex].failureSummary || [];
     failureSummary = failureSummary.split('\n');
@@ -150,10 +152,9 @@ export default Component.extend({
       }
     });
 
-    this.setProperties({
-      failureSummary,
-      style: htmlSafe(currentStyleEle)
-    });
+    applyStyles(this.element.querySelector('button'), currentStyleEle);
+
+    this.set('failureSummary', failureSummary);
   },
 
   actions: {
@@ -161,6 +162,7 @@ export default Component.extend({
       if (this.toggleProperty('canShowDetails')) {
         let popOverElem = this.element.querySelector(`[violation-id='${this.violation.id}']`);
         let buttonElem = this.element.querySelector('button');
+        let arrowElem = this.element.querySelector('.arrow');
 
         let {
           popOverPos,
@@ -169,11 +171,16 @@ export default Component.extend({
           arrowPos
         } = getPopoverPosition(popOverElem, buttonElem);
 
-        this.setProperties({
-          popOverPos,
-          popOverStyle: `top:${topPos}px;left:${leftRightPos}px`,
-          arrowPos: `top:${arrowPos}px`
+        applyStyles(popOverElem, {
+          'top': `${topPos}px`,
+          'left': `${leftRightPos}px`
         });
+
+        applyStyles(arrowElem, {
+          'top': `${arrowPos}px`
+        });
+
+        this.set('popOverPos', popOverPos);
       }
     }
   }

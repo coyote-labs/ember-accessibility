@@ -129,21 +129,35 @@
   padding: 0;
   margin: 0;
   border-radius: 50%;
-  background-color: #3369ff;
+  background-color: white;
+  border: 5px solid #0945ea;
   text-align: center;
   outline: none;
-  border: none;
-  transition: 5s linear all;
-}
-
-.accessibility-toggle-results .active {
-  background-color: #0945ea;
-  border-radius: 50%;
+  transition: 200ms linear all;
 }
 
 .accessibility-toggle-results svg {
   cursor: pointer;
   vertical-align: middle;
+  stroke: blue;
+}
+
+.accessibility-toggle-results svg g {
+  fill: #0945ea
+}
+
+.accessibility-toggle-results button.active {
+  background-color: #0945ea;
+}
+
+.accessibility-toggle-results .active svg {
+  background-color: #0945ea;
+  border-radius: 50%;
+  stroke: white
+}
+
+.accessibility-toggle-results .active svg g{
+  fill: white
 }
 
 .accessibility-result {

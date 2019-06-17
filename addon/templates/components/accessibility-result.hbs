@@ -2,12 +2,11 @@
   type="button"
   aria-label="Accessibility Issue"
   title={{violation.description}}
-  style={{style}}
   class="toggle-accessibility-result" {{action "showDetails"}}>
 </button>
 
-<div class="accessibility-result-popover accessibility-result {{popOverPos}} {{if canShowDetails "show"}}" violation-id={{violation.id}} style={{popOverStyle}}>
-  <div class="arrow {{impact}}" style={{arrowPos}}></div>
+<div class="accessibility-result-popover accessibility-result {{popOverPos}} {{if canShowDetails "show"}}" violation-id={{violation.id}}>
+  <div class="arrow {{impact}}"></div>
   <div class="accessibility-result-content">
     <h1>{{violation.help}}</h1>
     {{#if violation.component}}
@@ -26,4 +25,4 @@
   </div>
 </div>
 
-<div class="accessbility-result-overlay" style={{overlayPos}}></div>
+<div class="accessbility-result-overlay"></div>
