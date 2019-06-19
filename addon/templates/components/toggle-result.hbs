@@ -7,8 +7,8 @@
     class={{if isAuditing "accessibility-pulse"}}
     data-test-action="check-accessibility"
     xmlns="http://www.w3.org/2000/svg"
-    width="60"
-    height="60"
+    width="50"
+    height="50"
     stroke="#fff"
     viewBox="0 0 60 60">
     <g fill="#fff">
@@ -17,3 +17,6 @@
     </g>
   </svg>
 </button>
+{{#if accessibilityTest.violations}}
+  <span class="accessibility-violations-badge">{{accessibilityTest.violations.length}}</span>
+{{/if}}

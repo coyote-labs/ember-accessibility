@@ -125,6 +125,21 @@
   z-index: 2147483636;
 }
 
+.accessibility-toggle-results > .accessibility-violations-badge {
+  position: absolute;
+  top: -17%;
+  right: -10%;
+  background: white;
+  border-radius: 50%;
+  background: #dc3545;
+  color: white;
+  width: 30px;
+  height: 30px;
+  line-height: 2;
+  text-align: center;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+}
+
 .accessibility-toggle-results button {
   padding: 0;
   margin: 0;
