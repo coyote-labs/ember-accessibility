@@ -1,6 +1,8 @@
 ember-accessibility
 ==============================================================================
 
+[![Latest npm release](https://img.shields.io/npm/v/@coyote-labs/ember-accessibility.svg)](https://www.npmjs.com/package/@coyote-labs/ember-accessibility)  [![TravisCI Build Status](https://img.shields.io/travis/ember-cli/ember-cli/master.svg?label=TravisCI)](https://travis-ci.org/coyote-labs/ember-accessibility)
+
 An EmberJS addon to help identify accessibility violations.
 
 This addon uses the [axe-core](https://github.com/dequelabs/axe-core) library
