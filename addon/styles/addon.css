@@ -54,7 +54,6 @@
   left: 50%;
   margin-left: -11px;
   border-top-width: 0;
-  border-bottom-color: #999;
   border-bottom-color: rgba(0, 0, 0, .25);
 }
 
@@ -70,7 +69,6 @@
   bottom: -11px;
   left: 50%;
   margin-left: -11px;
-  border-top-color: #999;
   border-top-color: rgba(0, 0, 0, .25);
   border-bottom-width: 0;
 }
@@ -88,7 +86,6 @@
   right: -11px;
   margin-top: -11px;
   border-right-width: 0;
-  border-left-color: #999;
   border-left-color: rgba(0, 0, 0, .25);
 }
 
@@ -104,7 +101,6 @@
   top: 50%;
   left: -11px;
   margin-top: -11px;
-  border-right-color: #999;
   border-right-color: rgba(0, 0, 0, .25);
   border-left-width: 0;
 }

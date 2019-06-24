@@ -124,7 +124,16 @@ export default Component.extend({
 
     let searchIndex = this.violation.index || 0;
     this.set('domElement', this.violation.nodes[searchIndex].target[0]);
-    let violatedElement = document.querySelector(this.domElement);
+
+    let violatedElement, button;
+
+    if (this.violatedElement) {
+      violatedElement = this.violatedElement; // eslint-disable-line prefer-destructuring
+    } else {
+      violatedElement = document.querySelector(this.domElement);
+      this.set('violatedElement', violatedElement);
+    }
+
     if (!violatedElement) {
       return;
     }
@@ -152,7 +161,14 @@ export default Component.extend({
       }
     });
 
-    applyStyles(this.element.querySelector('button'), currentStyleEle);
+    if (this.button) {
+      button = this.button; // eslint-disable-line prefer-destructuring
+    } else {
+      button = this.element.querySelector('button');
+      this.set('button', button);
+    }
+
+    applyStyles(button, currentStyleEle);
 
     this.set('failureSummary', failureSummary);
   },
