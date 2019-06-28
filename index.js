@@ -31,6 +31,10 @@ module.exports = {
     this.app = app;
     this.addonOptions = this.app.project.config(app.env)['ember-accessibility'] || {};
 
+    if (this.addonOptions.isEnabled) {
+      this.app.import('vendor/style.css');
+    }
+
     this._super.included.apply(this, arguments);
   },
 
@@ -52,5 +56,13 @@ module.exports = {
     }
 
     return this._super.treeForAddon.call(this, tree);
+  },
+
+  treeForAddonTestSupport(tree) {
+    if (!this.addonOptions.isEnabled) {
+      return writeFile('test-support/audit.js', 'export default function() {}');
+    }
+
+    return this._super.treeForAddonTestSupport.call(this, tree);
   }
 };
