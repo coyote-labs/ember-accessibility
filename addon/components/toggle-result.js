@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import layout from '../templates/components/toggle-result';
 import { inject as service } from '@ember/service';
+import { next } from '@ember/runloop';
 
 export default Component.extend({
   layout,
@@ -8,8 +9,14 @@ export default Component.extend({
   classNames: ['accessibility-toggle-results'],
   accessibilityTest: service('accessibility-test'),
 
-  async mouseUp() {
+  async mouseUp(e) {
     if (this.preventToggle) {
+      return;
+    }
+
+    if (e.target
+      && e.target.classList
+      && e.target.classList.contains('loading-accessibility-overlay')) {
       return;
     }
 
@@ -27,7 +34,9 @@ export default Component.extend({
       'accessibilityTest.isEnabled': true
     });
 
-    await this.accessibilityTest.getViolations();
-    this.set('isAuditing', false);
+    next(this, async function() {
+      await this.accessibilityTest.getViolations();
+      this.set('isAuditing', false);
+    });
   }
 });
