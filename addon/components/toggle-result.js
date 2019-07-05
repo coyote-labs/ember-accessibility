@@ -16,7 +16,7 @@ export default Component.extend({
 
     if (e.target
       && e.target.classList
-      && e.target.classList.contains('loading-accessibility-overlay')) {
+      && e.target.classList.contains('accessibility-loading-overlay')) {
       return;
     }
 
