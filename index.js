@@ -60,7 +60,7 @@ module.exports = {
 
   treeForAddonTestSupport(tree) {
     if (!this.addonOptions.isEnabled) {
-      return writeFile('test-support/audit.js', 'export default function() {}');
+      return writeFile('test-support/audit.js', '');
     }
 
     return this._super.treeForAddonTestSupport.call(this, tree);
