@@ -637,8 +637,8 @@
     resolve-global "1.0.0"
 
 "@commitlint/config-conventional@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.npmjs.org/@commitlint/config-conventional/-/config-conventional-8.0.0.tgz#f45349cab9dcfc08a30fbcf2b6317506e17bc8e6"
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/@commitlint/config-conventional/-/config-conventional-8.1.0.tgz#ba61fbf0ad4df52da2b5ee3034470371a2cbf039"
 
 "@commitlint/ensure@^8.1.0":
   version "8.1.0"
