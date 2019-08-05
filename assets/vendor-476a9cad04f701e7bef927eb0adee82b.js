@@ -4069,7 +4069,7 @@ t=i[0],n=o[0],r=o[1]}"template"===n&&0===t.lastIndexOf("components/",0)&&(r="com
 var s=r,u=Ember.get(this,"namespace")
 return{parsedName:!0,fullName:e,prefix:t||this.prefix({type:n}),type:n,fullNameWithoutType:s,name:r,root:u,resolveMethodName:"resolve"+Ember.String.classify(n)}},pluralizedTypes:null,moduleRegistry:null,makeToString:function(e,t){return this.namespace.modulePrefix+"@"+t+":"},shouldWrapInClassFactory:function(){return!1},init:function(){this._super(),this.moduleBasedResolver=!0,this._moduleRegistry||(this._moduleRegistry=new r),this._normalizeCache=(0,n.default)(),this.pluralizedTypes=this.pluralizedTypes||(0,n.default)(),this.pluralizedTypes.config||(this.pluralizedTypes.config="config"),this._deprecatedPodModulePrefix=!1},normalize:function(e){return this._normalizeCache[e]||(this._normalizeCache[e]=this._normalize(e))},resolve:function(e){var t=this.parseName(e),n=t.resolveMethodName,r=void 0
 return"function"==typeof this[n]&&(r=this[n](t)),null==r&&(r=this.resolveOther(t)),r},_normalize:function(e){var t=e.split(":")
-return t.length>1?"helper"===t[0]?t[0]+":"+t[1].replace(/_/g,"-"):t[0]+":"+Ember.String.dasherize(t[1].replace(/\./g,"/")):e},pluralize:function(e){return this.pluralizedTypes[e]||(this.pluralizedTypes[e]=e+"s")},podBasedLookupWithPrefix:function(e,t){var n=t.fullNameWithoutType
+return t.length>1?"component"===t[0]||"helper"===t[0]?t[0]+":"+t[1].replace(/_/g,"-"):t[0]+":"+Ember.String.dasherize(t[1].replace(/\./g,"/")):e},pluralize:function(e){return this.pluralizedTypes[e]||(this.pluralizedTypes[e]=e+"s")},podBasedLookupWithPrefix:function(e,t){var n=t.fullNameWithoutType
 return"template"===t.type&&(n=n.replace(/^components\//,"")),e+"/"+n+"/"+t.type},podBasedModuleName:function(e){var t=this.namespace.podModulePrefix||this.namespace.modulePrefix
 return this.podBasedLookupWithPrefix(t,e)},podBasedComponentsInSubdir:function(e){var t=this.namespace.podModulePrefix||this.namespace.modulePrefix
 if(t+="/components","component"===e.type||/^components/.test(e.fullNameWithoutType))return this.podBasedLookupWithPrefix(t,e)},resolveEngine:function(e){var t=e.fullNameWithoutType+"/engine"
@@ -4094,7 +4094,39 @@ return t&&t.default&&(t=t.default),t}})
 i.reopenClass({moduleBasedResolver:!0}),e.default=i}),define("ember-resolver/utils/class-factory",["exports"],function(e){"use strict"
 Object.defineProperty(e,"__esModule",{value:!0}),e.default=function(e){return{create:function(t){return"function"==typeof e.extend?e.extend(t):e}}}}),define("ember-resolver/utils/make-dictionary",["exports"],function(e){"use strict"
 Object.defineProperty(e,"__esModule",{value:!0}),e.default=function(){var e=Object.create(null)
-return e._dict=null,delete e._dict,e}})
+return e._dict=null,delete e._dict,e}}),define("ember-test-waiters/build-waiter",["exports","ember-test-waiters","ember-test-waiters/noop-test-waiter"],function(e,t,n){"use strict"
+Object.defineProperty(e,"__esModule",{value:!0}),e.default=function(e){0
+return new n.default(e)}}),define("ember-test-waiters/index",["exports","ember-test-waiters/waiter-manager","ember-test-waiters/test-waiter","ember-test-waiters/build-waiter","ember-test-waiters/wait-for-promise"],function(e,t,n,r,i){"use strict"
+Object.defineProperty(e,"__esModule",{value:!0}),Object.defineProperty(e,"register",{enumerable:!0,get:function(){return t.register}}),Object.defineProperty(e,"unregister",{enumerable:!0,get:function(){return t.unregister}}),Object.defineProperty(e,"getWaiters",{enumerable:!0,get:function(){return t.getWaiters}}),Object.defineProperty(e,"_reset",{enumerable:!0,get:function(){return t._reset}}),Object.defineProperty(e,"getPendingWaiterState",{enumerable:!0,get:function(){return t.getPendingWaiterState}}),Object.defineProperty(e,"hasPendingWaiters",{enumerable:!0,get:function(){return t.hasPendingWaiters}}),Object.defineProperty(e,"TestWaiter",{enumerable:!0,get:function(){return n.default}}),Object.defineProperty(e,"buildWaiter",{enumerable:!0,get:function(){return r.default}}),Object.defineProperty(e,"waitForPromise",{enumerable:!0,get:function(){return i.default}})}),define("ember-test-waiters/noop-test-waiter",["exports"],function(e){"use strict"
+function t(e,t){for(var n=0;n<t.length;n++){var r=t[n]
+r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0
+var n=function(){function e(t){(function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")})(this,e),this.name=t}var n,r,i
+return n=e,(r=[{key:"beginAsync",value:function(){return this}},{key:"endAsync",value:function(){}},{key:"waitUntil",value:function(){return!0}},{key:"debugInfo",value:function(){return[]}}])&&t(n.prototype,r),i&&t(n,i),e}()
+e.default=n}),define("ember-test-waiters/test-waiter",["exports","ember-test-waiters/waiter-manager"],function(e,t){"use strict"
+function n(e){return function(e){if(Array.isArray(e)){for(var t=0,n=new Array(e.length);t<e.length;t++)n[t]=e[t]
+return n}}(e)||function(e){if(Symbol.iterator in Object(e)||"[object Arguments]"===Object.prototype.toString.call(e))return Array.from(e)}(e)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance")}()}function r(e,t){for(var n=0;n<t.length;n++){var r=t[n]
+r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0
+var i=0
+function a(){return i++}var o=function(){function e(t,n){(function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")})(this,e),this.isRegistered=!1,this.items=new Map,this.name=t,this.nextToken=n||a}var i,o,s
+return i=e,(o=[{key:"register",value:function(){this.isRegistered||((0,t.register)(this),this.isRegistered=!0)}},{key:"beginAsync",value:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:this.nextToken(),t=arguments.length>1?arguments[1]:void 0
+if(this.register(),this.items.has(e))throw new Error("beginAsync called for ".concat(e," but it is already pending."))
+var n=new Error
+return this.items.set(e,{get stack(){return n.stack},label:t}),e}},{key:"endAsync",value:function(e){if(!this.items.has(e))throw new Error("endAsync called for ".concat(e," but it is not currently pending."))
+this.items.delete(e)}},{key:"waitUntil",value:function(){return 0===this.items.size}},{key:"debugInfo",value:function(){return n(this.items.values())}}])&&r(i.prototype,o),s&&r(i,s),e}()
+e.default=o}),define("ember-test-waiters/types/index",[],function(){})
+define("ember-test-waiters/wait-for-promise",["exports","ember-test-waiters/test-waiter"],function(e,t){"use strict"
+Object.defineProperty(e,"__esModule",{value:!0}),e.default=function(e,t){var n=e
+0
+return n}
+new t.default("promise-waiter")}),define("ember-test-waiters/waiter-manager",["exports"],function(e){"use strict"
+Object.defineProperty(e,"__esModule",{value:!0}),e.register=function(e){t.set(e.name,e)},e.unregister=function(e){t.delete(e.name)},e.getWaiters=function(){return e=t.values(),function(e){if(Array.isArray(e)){for(var t=0,n=new Array(e.length);t<e.length;t++)n[t]=e[t]
+return n}}(e)||function(e){if(Symbol.iterator in Object(e)||"[object Arguments]"===Object.prototype.toString.call(e))return Array.from(e)}(e)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance")}()
+var e},e._reset=function(){t.clear()},e.getPendingWaiterState=n,e.hasPendingWaiters=r
+var t=new Map
+function n(){var e={pending:0,waiters:{}}
+return t.forEach(function(t){if(!t.waitUntil()){e.pending++
+var n=t.debugInfo()
+e.waiters[t.name]=n||!0}}),e}function r(){return n().pending>0}Ember.Test&&Ember.Test.registerWaiter(function(){return!r()})})
 var __ember_auto_import__=function(e){function t(t){for(var r,o,s=t[0],u=t[1],l=t[2],d=0,p=[];d<s.length;d++)o=s[d],i[o]&&p.push(i[o][0]),i[o]=0
 for(r in u)Object.prototype.hasOwnProperty.call(u,r)&&(e[r]=u[r])
 for(c&&c(t);p.length;)p.shift()()
