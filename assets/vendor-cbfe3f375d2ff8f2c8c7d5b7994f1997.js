@@ -4010,7 +4010,7 @@ var i=Ember.Service.extend({init:function(){this._super.apply(this,arguments),th
 return regeneratorRuntime.wrap(function(e){for(;;)switch(e.prev=e.next){case 0:return r=s.length>0&&void 0!==s[0]?s[0]:document.querySelector("body"),i=s.length>1?s[1]:void 0,e.next=4,(0,t.default)(r)
 case 4:a=(a=e.sent).map(function(e){var t=e.index||0,n=e.nodes[t].target,a=o.renderedComponents,s=void 0===a?[]:a
 if(i)e.component=i
-else for(var u=r.querySelector(n[0]),l=s.length-1;l>=0;l--){var c=s[l],d=r.querySelector("#".concat(c.id))
+else for(var u=r.querySelector(n[0]),l=s.length-1;l>=0;l--){var c=s[l],d=r.querySelector('[id="'.concat(c.id,'"]'))
 d&&d.contains(u)&&(e.component=c.name)}return e}),this.isEnabled&&(a=Ember.A([].concat(n(this.violations),n(a)))),this.set("violations",a)
 case 8:case"end":return e.stop()}},e,this)}),function(){var t=this,n=arguments
 return new Promise(function(i,a){var o=e.apply(t,n)
