@@ -25,7 +25,7 @@ export default Service.extend({
         let violatingElement = element.querySelector(target[0]);
         for (let index = renderedComponents.length - 1; index >= 0; index--) {
           let component = renderedComponents[index];
-          let componentElement = element.querySelector(`#${component.id}`);
+          let componentElement = element.querySelector(`[id="${component.id}"]`);
           if (
             componentElement
             && componentElement.contains(violatingElement)
