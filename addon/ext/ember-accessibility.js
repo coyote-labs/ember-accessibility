@@ -28,9 +28,7 @@ Component.reopen({
   },
 
   scheduleAudit() {
-    scheduleOnce('afterRender', this, function() {
-      this.runAudit();
-    });
+    scheduleOnce('afterRender', this, this.runAudit);
   },
 
   runAudit() {
