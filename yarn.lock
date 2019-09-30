@@ -907,17 +907,17 @@
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@ember/edition-utils/-/edition-utils-1.1.1.tgz#d5732c3da593f202e6e1ac6dbee56a758242403f"
 
-"@ember/optional-features@^0.7.0":
-  version "0.7.0"
-  resolved "https://registry.npmjs.org/@ember/optional-features/-/optional-features-0.7.0.tgz#f65a858007020ddfb8342f586112750c32abd2d9"
+"@ember/optional-features@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@ember/optional-features/-/optional-features-1.0.0.tgz#8e54ff37f4d9642212b45387f182cf7322aaaab9"
   dependencies:
-    chalk "^2.3.0"
+    chalk "^2.4.2"
     co "^4.6.0"
-    ember-cli-version-checker "^2.1.0"
-    glob "^7.1.2"
-    inquirer "^3.3.0"
+    ember-cli-version-checker "^3.1.3"
+    glob "^7.1.4"
+    inquirer "^6.5.1"
     mkdirp "^0.5.1"
-    silent-error "^1.1.0"
+    silent-error "^1.1.1"
     util.promisify "^1.0.0"
 
 "@ember/test-helpers@^1.6.0":
@@ -1318,7 +1318,7 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.npmjs.org/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
 
-ansi-escapes@^3.0.0, ansi-escapes@^3.2.0:
+ansi-escapes@^3.2.0:
   version "3.2.0"
   resolved "https://registry.npmjs.org/ansi-escapes/-/ansi-escapes-3.2.0.tgz#8780b98ff9dbf5638152d1f1fe5c1d7b4442976b"
 
@@ -2972,10 +2972,6 @@ chalk@^1.0.0, chalk@^1.1.3:
     strip-ansi "^3.0.0"
     supports-color "^2.0.0"
 
-chardet@^0.4.0:
-  version "0.4.2"
-  resolved "https://registry.npmjs.org/chardet/-/chardet-0.4.2.tgz#b5473b33dc97c424e5d98dc87d55d4d8a29c8bf2"
-
 chardet@^0.7.0:
   version "0.7.0"
   resolved "https://registry.npmjs.org/chardet/-/chardet-0.7.0.tgz#90094849f0937f2eedc2425d0d28a9e5f0cbad9e"
@@ -3965,7 +3961,7 @@ ember-cli-uglify@^3.0.0:
     broccoli-uglify-sourcemap "^3.1.0"
     lodash.defaultsdeep "^4.6.0"
 
-ember-cli-version-checker@^2.0.0, ember-cli-version-checker@^2.1.0, ember-cli-version-checker@^2.1.1, ember-cli-version-checker@^2.1.2:
+ember-cli-version-checker@^2.0.0, ember-cli-version-checker@^2.1.1, ember-cli-version-checker@^2.1.2:
   version "2.2.0"
   resolved "https://registry.npmjs.org/ember-cli-version-checker/-/ember-cli-version-checker-2.2.0.tgz#47771b731fe0962705e27c8199a9e3825709f3b3"
   dependencies:
@@ -4660,14 +4656,6 @@ extend-shallow@^3.0.0, extend-shallow@^3.0.2:
 extend@^3.0.0, extend@~3.0.2:
   version "3.0.2"
   resolved "https://registry.npmjs.org/extend/-/extend-3.0.2.tgz#f8b1136b4071fbd8eb140aff858b1019ec2915fa"
-
-external-editor@^2.0.4:
-  version "2.2.0"
-  resolved "https://registry.npmjs.org/external-editor/-/external-editor-2.2.0.tgz#045511cfd8d133f3846673d1047c154e214ad3d5"
-  dependencies:
-    chardet "^0.4.0"
-    iconv-lite "^0.4.17"
-    tmp "^0.0.33"
 
 external-editor@^3.0.3:
   version "3.0.3"
@@ -5515,7 +5503,7 @@ husky@^3.0.0:
     run-node "^1.0.0"
     slash "^3.0.0"
 
-iconv-lite@0.4.24, iconv-lite@^0.4.17, iconv-lite@^0.4.24, iconv-lite@^0.4.4:
+iconv-lite@0.4.24, iconv-lite@^0.4.24, iconv-lite@^0.4.4:
   version "0.4.24"
   resolved "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.24.tgz#2022b4b25fbddc21d2f524974a474aafe733908b"
   dependencies:
@@ -5602,28 +5590,9 @@ inline-source-map-comment@^1.0.5:
     sum-up "^1.0.1"
     xtend "^4.0.0"
 
-inquirer@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.npmjs.org/inquirer/-/inquirer-3.3.0.tgz#9dd2f2ad765dcab1ff0443b491442a20ba227dc9"
-  dependencies:
-    ansi-escapes "^3.0.0"
-    chalk "^2.0.0"
-    cli-cursor "^2.1.0"
-    cli-width "^2.0.0"
-    external-editor "^2.0.4"
-    figures "^2.0.0"
-    lodash "^4.3.0"
-    mute-stream "0.0.7"
-    run-async "^2.2.0"
-    rx-lite "^4.0.8"
-    rx-lite-aggregates "^4.0.8"
-    string-width "^2.1.0"
-    strip-ansi "^4.0.0"
-    through "^2.3.6"
-
-inquirer@^6, inquirer@^6.2.2:
-  version "6.3.1"
-  resolved "https://registry.npmjs.org/inquirer/-/inquirer-6.3.1.tgz#7a413b5e7950811013a3db491c61d1f3b776e8e7"
+inquirer@^6, inquirer@^6.2.2, inquirer@^6.5.1:
+  version "6.5.2"
+  resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-6.5.2.tgz#ad50942375d036d327ff528c08bd5fab089928ca"
   dependencies:
     ansi-escapes "^3.2.0"
     chalk "^2.4.2"
@@ -5631,7 +5600,7 @@ inquirer@^6, inquirer@^6.2.2:
     cli-width "^2.0.0"
     external-editor "^3.0.3"
     figures "^2.0.0"
-    lodash "^4.17.11"
+    lodash "^4.17.12"
     mute-stream "0.0.7"
     run-async "^2.2.0"
     rxjs "^6.4.0"
@@ -6499,7 +6468,7 @@ lodash@4.17.14:
   version "4.17.14"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.14.tgz#9ce487ae66c96254fe20b599f21b6816028078ba"
 
-lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.4, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1:
+lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.13, lodash@^4.17.4, lodash@^4.2.1, lodash@^4.6.1:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
 
@@ -8112,16 +8081,6 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   resolved "https://registry.npmjs.org/run-queue/-/run-queue-1.0.3.tgz#e848396f057d223f24386924618e25694161ec47"
   dependencies:
     aproba "^1.1.1"
-
-rx-lite-aggregates@^4.0.8:
-  version "4.0.8"
-  resolved "https://registry.npmjs.org/rx-lite-aggregates/-/rx-lite-aggregates-4.0.8.tgz#753b87a89a11c95467c4ac1626c4efc4e05c67be"
-  dependencies:
-    rx-lite "*"
-
-rx-lite@*, rx-lite@^4.0.8:
-  version "4.0.8"
-  resolved "https://registry.npmjs.org/rx-lite/-/rx-lite-4.0.8.tgz#0b1e11af8bc44836f04a6407e92da42467b79444"
 
 rxjs@^6.4.0:
   version "6.5.2"
