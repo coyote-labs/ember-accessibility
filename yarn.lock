@@ -259,17 +259,13 @@
   version "7.4.5"
   resolved "https://registry.npmjs.org/@babel/parser/-/parser-7.4.5.tgz#04af8d5d5a2b044a2a1bffacc1e5e6673544e872"
 
-"@babel/parser@^7.4.5", "@babel/parser@^7.6.2":
+"@babel/parser@^7.4.5", "@babel/parser@^7.6.0", "@babel/parser@^7.6.2":
   version "7.6.2"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.6.2.tgz#205e9c95e16ba3b8b96090677a67c9d6075b70a1"
 
 "@babel/parser@^7.5.5":
   version "7.5.5"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.5.5.tgz#02f077ac8817d3df4a832ef59de67565e71cca4b"
-
-"@babel/parser@^7.6.0", "@babel/parser@^7.6.2":
-  version "7.6.2"
-  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.6.2.tgz#205e9c95e16ba3b8b96090677a67c9d6075b70a1"
 
 "@babel/plugin-proposal-async-generator-functions@^7.2.0":
   version "7.2.0"
@@ -279,18 +275,11 @@
     "@babel/helper-remap-async-to-generator" "^7.1.0"
     "@babel/plugin-syntax-async-generators" "^7.2.0"
 
-"@babel/plugin-proposal-class-properties@^7.1.0":
+"@babel/plugin-proposal-class-properties@^7.1.0", "@babel/plugin-proposal-class-properties@^7.3.4":
   version "7.5.5"
   resolved "https://registry.yarnpkg.com/@babel/plugin-proposal-class-properties/-/plugin-proposal-class-properties-7.5.5.tgz#a974cfae1e37c3110e71f3c6a2e48b8e71958cd4"
   dependencies:
     "@babel/helper-create-class-features-plugin" "^7.5.5"
-    "@babel/helper-plugin-utils" "^7.0.0"
-
-"@babel/plugin-proposal-class-properties@^7.3.4":
-  version "7.4.4"
-  resolved "https://registry.npmjs.org/@babel/plugin-proposal-class-properties/-/plugin-proposal-class-properties-7.4.4.tgz#93a6486eed86d53452ab9bab35e368e9461198ce"
-  dependencies:
-    "@babel/helper-create-class-features-plugin" "^7.4.4"
     "@babel/helper-plugin-utils" "^7.0.0"
 
 "@babel/plugin-proposal-decorators@^7.3.0":
@@ -703,7 +692,7 @@
     globals "^11.1.0"
     lodash "^4.17.11"
 
-"@babel/traverse@^7.4.5":
+"@babel/traverse@^7.4.5", "@babel/traverse@^7.6.2":
   version "7.6.2"
   resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.6.2.tgz#b0e2bfd401d339ce0e6c05690206d1e11502ce2c"
   dependencies:
@@ -731,20 +720,6 @@
     globals "^11.1.0"
     lodash "^4.17.13"
 
-"@babel/traverse@^7.6.2":
-  version "7.6.2"
-  resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.6.2.tgz#b0e2bfd401d339ce0e6c05690206d1e11502ce2c"
-  dependencies:
-    "@babel/code-frame" "^7.5.5"
-    "@babel/generator" "^7.6.2"
-    "@babel/helper-function-name" "^7.1.0"
-    "@babel/helper-split-export-declaration" "^7.4.4"
-    "@babel/parser" "^7.6.2"
-    "@babel/types" "^7.6.0"
-    debug "^4.1.0"
-    globals "^11.1.0"
-    lodash "^4.17.13"
-
 "@babel/types@^7.0.0", "@babel/types@^7.1.6", "@babel/types@^7.2.0", "@babel/types@^7.3.2", "@babel/types@^7.3.4", "@babel/types@^7.4.4", "@babel/types@^7.5.0":
   version "7.5.0"
   resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.5.0.tgz#e47d43840c2e7f9105bc4d3a2c371b4d0c7832ab"
@@ -764,14 +739,6 @@
 "@babel/types@^7.5.5":
   version "7.5.5"
   resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.5.5.tgz#97b9f728e182785909aa4ab56264f090a028d18a"
-  dependencies:
-    esutils "^2.0.2"
-    lodash "^4.17.13"
-    to-fast-properties "^2.0.0"
-
-"@babel/types@^7.6.0":
-  version "7.6.1"
-  resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.6.1.tgz#53abf3308add3ac2a2884d539151c57c4b3ac648"
   dependencies:
     esutils "^2.0.2"
     lodash "^4.17.13"
@@ -2285,7 +2252,7 @@ broccoli-babel-transpiler@^6.5.0:
     rsvp "^4.8.2"
     workerpool "^2.3.0"
 
-broccoli-babel-transpiler@^7.1.2, broccoli-babel-transpiler@^7.3.0:
+broccoli-babel-transpiler@^7.3.0:
   version "7.3.0"
   resolved "https://registry.yarnpkg.com/broccoli-babel-transpiler/-/broccoli-babel-transpiler-7.3.0.tgz#a0ad3a37dbf74469664bbca403d652070c2c1317"
   dependencies:
@@ -2344,7 +2311,7 @@ broccoli-clean-css@^1.1.0:
     inline-source-map-comment "^1.0.5"
     json-stable-stringify "^1.0.0"
 
-broccoli-concat@^3.2.2, broccoli-concat@^3.7.1, broccoli-concat@^3.7.4:
+broccoli-concat@^3.2.2, broccoli-concat@^3.7.1, broccoli-concat@^3.7.3, broccoli-concat@^3.7.4:
   version "3.7.4"
   resolved "https://registry.yarnpkg.com/broccoli-concat/-/broccoli-concat-3.7.4.tgz#7371e846eb7a97cb44ccff10f68582bcadcafacd"
   dependencies:
@@ -3788,8 +3755,8 @@ ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-beta.7, ember-cli-babel@^6
     semver "^5.5.0"
 
 ember-cli-babel@^7.1.2, ember-cli-babel@^7.10.0, ember-cli-babel@^7.7.0, ember-cli-babel@^7.7.3, ember-cli-babel@^7.8.0:
-  version "7.11.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-7.11.0.tgz#a2f4e4f123a4690968b512b87b4ff4bfa57ec244"
+  version "7.12.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-7.12.0.tgz#064997d199384be8c88d251f30ef67953d3bddc5"
   dependencies:
     "@babel/core" "^7.0.0"
     "@babel/plugin-proposal-class-properties" "^7.3.4"
@@ -3803,7 +3770,7 @@ ember-cli-babel@^7.1.2, ember-cli-babel@^7.10.0, ember-cli-babel@^7.7.0, ember-c
     babel-plugin-debug-macros "^0.3.0"
     babel-plugin-ember-modules-api-polyfill "^2.12.0"
     babel-plugin-module-resolver "^3.1.1"
-    broccoli-babel-transpiler "^7.1.2"
+    broccoli-babel-transpiler "^7.3.0"
     broccoli-debug "^0.6.4"
     broccoli-funnel "^2.0.1"
     broccoli-source "^1.1.0"
