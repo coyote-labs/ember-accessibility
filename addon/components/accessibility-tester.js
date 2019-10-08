@@ -10,11 +10,18 @@ export default Component.extend({
   accessibilityTest: service('accessibility-test'),
   isAccessibilityTest: true,
 
-  top: 100,
+  init() {
+    this._super(...arguments);
+
+    let left = localStorage.getItem('ember-accessibility-left');
+    let top = localStorage.getItem('ember-accessibility-top');
+
+    this.set('top', top || this.top || 100);
+    this.set('left', left || this.left || 1200);
+  },
 
   position: computed('top', 'left', function() {
-    let left = this.left ? `${this.left}px` : '80%';
-    return htmlSafe(`top:${this.top}px;left:${left}`);
+    return htmlSafe(`top:${this.top}px;left:${this.left}px`);
   }),
 
   didInsertElement() {
@@ -57,6 +64,9 @@ export default Component.extend({
     if (!this.isDragging) {
       return;
     }
+
+    localStorage.setItem('ember-accessibility-left', this.left);
+    localStorage.setItem('ember-accessibility-top', this.top);
 
     this.setProperties({
       isDragging: false,

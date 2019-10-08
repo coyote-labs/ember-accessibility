@@ -1,7 +1,7 @@
 import auditWithAxe from '@coyote-labs/ember-accessibility/utils/audit';
 
 async function runAudit(element = '#ember-testing-container') {
-  let violations = await auditWithAxe(element);
+  let violations = await auditWithAxe(element) || [];
 
   if (violations.length) {
     let violationMessages = violations.map((violation) => {
