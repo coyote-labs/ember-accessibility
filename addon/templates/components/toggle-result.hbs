@@ -1,11 +1,11 @@
-{{#if isAuditing}}
+{{#if this.isAuditing}}
   <div class="accessibility-loading-overlay"></div>
 {{/if}}
 <button
   type="button"
   aria-label="Scan Accessibility Issues"
-  title={{if accessibilityTest.violations "Disable Accessibility Issues" "Scan Accessibility Issues"}}
-  class={{if accessibilityTest.violations "active"}}>
+  title={{if this.accessibilityTest.violations "Disable Accessibility Issues" "Scan Accessibility Issues"}}
+  class={{if this.accessibilityTest.violations "active"}}>
   <svg
     data-test-action="check-accessibility"
     xmlns="http://www.w3.org/2000/svg"
@@ -19,6 +19,6 @@
     </g>
   </svg>
 </button>
-{{#if accessibilityTest.violations}}
-  <span class="accessibility-violations-badge">{{accessibilityTest.violations.length}}</span>
+{{#if this.accessibilityTest.violations}}
+  <span class="accessibility-violations-badge">{{this.accessibilityTest.violations.length}}</span>
 {{/if}}
