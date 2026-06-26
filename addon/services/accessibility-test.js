@@ -1,13 +1,11 @@
 import Service from '@ember/service';
-import { A } from '@ember/array';
+import { tracked } from '@glimmer/tracking';
 import audit from '@coyote-labs/ember-accessibility/utils/audit';
 
-export default Service.extend({
-  init() {
-    this._super(...arguments);
-    this.violations = A();
-    this.renderedComponents = A();
-  },
+export default class AccessibilityTestService extends Service {
+  @tracked violations = [];
+  @tracked renderedComponents = [];
+  @tracked isEnabled = false;
 
   async getViolations(element = document.querySelector('body'), component) {
     let violations = await audit(element);
@@ -17,20 +15,16 @@ export default Service.extend({
       let node = violation.nodes[index];
       let { target } = node;
       let { renderedComponents = [] } = this;
+
       if (component) {
         violation.component = component;
       } else {
-        // iterate in reverse order to ensure that the root element/component
-        // is not displayed for every component that is at any level higher than that
         let violatingElement = element.querySelector(target[0]);
-        for (let index = renderedComponents.length - 1; index >= 0; index--) {
-          let component = renderedComponents[index];
-          let componentElement = element.querySelector(`[id="${component.id}"]`);
-          if (
-            componentElement
-            && componentElement.contains(violatingElement)
-          ) {
-            violation.component = component.name;
+        for (let i = renderedComponents.length - 1; i >= 0; i--) {
+          let comp = renderedComponents[i];
+          let componentElement = element.querySelector(`[id="${comp.id}"]`);
+          if (componentElement && componentElement.contains(violatingElement)) {
+            violation.component = comp.name;
           }
         }
       }
@@ -39,9 +33,9 @@ export default Service.extend({
     });
 
     if (this.isEnabled) {
-      violations = A([...this.violations, ...violations]);
+      this.violations = [...this.violations, ...violations];
+    } else {
+      this.violations = violations;
     }
-
-    this.set('violations', violations);
   }
-});
+}
