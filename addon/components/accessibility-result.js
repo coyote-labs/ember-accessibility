@@ -119,7 +119,7 @@ export default class AccessibilityResultComponent extends Component {
   }
 
   findPosition() {
-    if (this.isDestroying || this.isDestroyed) {
+    if (!this.element) {
       return;
     }
 
@@ -177,28 +177,31 @@ export default class AccessibilityResultComponent extends Component {
   showDetails() {
     this.canShowDetails = !this.canShowDetails;
 
-    if (this.canShowDetails) {
-      let popOverElem = this.element.querySelector(
-        `[violation-id='${this.args.violation.id}']`
-      );
-      let buttonElem = this.element.querySelector('button');
-      let arrowElem = this.element.querySelector('.arrow');
-
-      let { popOverPos, topPos, leftRightPos, arrowPos } = getPopoverPosition(
-        popOverElem,
-        buttonElem
-      );
-
-      applyStyles(popOverElem, {
-        top: `${topPos}px`,
-        left: `${leftRightPos}px`,
-      });
-
-      applyStyles(arrowElem, {
-        top: `${arrowPos}px`,
-      });
-
-      this.popOverPos = popOverPos;
+    if (!this.canShowDetails) {
+      this.popOverPos = '';
+      return;
     }
+
+    let popOverElem = this.element.querySelector(
+      `[violation-id='${this.args.violation.id}']`
+    );
+    let buttonElem = this.element.querySelector('button');
+    let arrowElem = this.element.querySelector('.arrow');
+
+    let { popOverPos, topPos, leftRightPos, arrowPos } = getPopoverPosition(
+      popOverElem,
+      buttonElem
+    );
+
+    applyStyles(popOverElem, {
+      top: `${topPos}px`,
+      left: `${leftRightPos}px`,
+    });
+
+    applyStyles(arrowElem, {
+      top: `${arrowPos}px`,
+    });
+
+    this.popOverPos = popOverPos;
   }
 }
