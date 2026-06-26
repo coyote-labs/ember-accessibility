@@ -1,8 +1,8 @@
-import Component from '@ember/component';
-import layout from '../templates/components/accessibility-result';
-import { inject as service } from '@ember/service';
+import Component from '@glimmer/component';
+import { service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
-import { computed } from '@ember/object';
 import { bind, debounce, cancel } from '@ember/runloop';
 
 import findScrollContainer from '@coyote-labs/ember-accessibility/utils/find-scroll-container';
@@ -13,125 +13,125 @@ const impactColors = {
   critical: 'rgb(220, 53, 69, 0.5)',
   serious: 'rgb(255, 153, 102, 0.5)',
   moderate: 'rgb(255, 204, 0, 0.5)',
-  minor: 'rgb(23, 162, 184, 0.5)'
+  minor: 'rgb(23, 162, 184, 0.5)',
 };
 
-export default Component.extend({
-  layout,
-  tagName: 'span',
-  canShowDetails: false,
-  style: '',
-  popOverPos: '',
-  popOverStyle: '',
-  scrollDebounce: 150,
-  accessibilityTest: service('accessibility-test'),
-  isAccessibilityTest: true,
+export default class AccessibilityResultComponent extends Component {
+  @service accessibilityTest;
 
+  @tracked canShowDetails = false;
+  @tracked popOverPos = '';
+  @tracked failureSummary = [];
+
+  element = null;
+  _scrollHandler = null;
+  _clickHandler = null;
+  _scrollDebounceId = null;
+  domElement = null;
+  violatedElement = null;
+  button = null;
+
+  get impactIcon() {
+    let { impact = 'minor' } = this.args.violation;
+    return `${impact.toLowerCase()}-icon`;
+  }
+
+  @action
+  setup(element) {
+    this.element = element;
+    this._listen();
+    this.findPosition();
+  }
+
+  @action
+  teardown() {
+    this._stopListening();
+  }
+
+  @action
   mouseEnter() {
     let violatingElement = document.querySelector(this.domElement);
 
-    // handle components that might disappear after audit is run
     if (!violatingElement) {
-      let { violations } = this.accessibilityTest;
-      this.set('accessibilityTest.violations', violations.without(this.violation));
-
+      this.accessibilityTest.violations = this.accessibilityTest.violations.filter(
+        (v) => v !== this.args.violation
+      );
       return;
     }
 
     let rectangle = violatingElement.getBoundingClientRect();
 
     applyStyles(this.element.querySelector('.accessbility-result-overlay'), {
-      'position': 'absolute',
-      'top': `${rectangle.top + window.scrollY}px`,
-      'left': `${rectangle.left + window.scrollX}px`,
-      'bottom': `${rectangle.bottom}px`,
-      'right': `${rectangle.right}px`,
-      'height': `${rectangle.height}px`,
-      'width': `${rectangle.width}px`,
-      'background': 'rgba(0, 0, 0, 0.3)',
+      position: 'absolute',
+      top: `${rectangle.top + window.scrollY}px`,
+      left: `${rectangle.left + window.scrollX}px`,
+      bottom: `${rectangle.bottom}px`,
+      right: `${rectangle.right}px`,
+      height: `${rectangle.height}px`,
+      width: `${rectangle.width}px`,
+      background: 'rgba(0, 0, 0, 0.3)',
       'border-radius': '5px',
-      'z-index': '2147483635'
+      'z-index': '2147483635',
     });
-  },
+  }
 
+  @action
   mouseLeave() {
     resetStyles(this.element.querySelector('.accessbility-result-overlay'));
-  },
-
-  didInsertElement() {
-    this._super(...arguments);
-
-    this._listen();
-    this.findPosition();
-  },
-
-  impactIcon: computed('violation.impact', function() {
-    let { impact = 'minor' } = this.violation;
-    return `${impact.toLowerCase()}-icon`;
-  }),
-
-  willDestroyElement() {
-    this._super(...arguments);
-    this._stopListening();
-  },
+  }
 
   _listen() {
-    this.setProperties({
-      _scrollHandler: bind(this, '_scroll'),
-      _clickHandler: bind(this, '_outsideClick')
-    });
+    this._scrollHandler = bind(this, '_scroll');
+    this._clickHandler = bind(this, '_outsideClick');
 
     this._listener().addEventListener('scroll', this._scrollHandler);
     document.addEventListener('click', this._clickHandler);
-  },
+  }
 
   _stopListening() {
     this._listener().removeEventListener('scroll', this._scrollHandler);
     document.removeEventListener('click', this._clickHandler);
     cancel(this._scrollDebounceId);
-  },
+  }
 
   _listener() {
-    let searchIndex = this.violation.index || 0;
-    let node = document.querySelector(this.violation.nodes[searchIndex].target[0]);
+    let searchIndex = this.args.violation.index || 0;
+    let node = document.querySelector(this.args.violation.nodes[searchIndex].target[0]);
     let scrollParentElement = findScrollContainer(node);
     if (scrollParentElement) {
       return scrollParentElement;
     }
-
     return this.element;
-  },
+  }
 
   _scroll(e) {
-    this.set('_scrollDebounceId', debounce(this, '_debouncedScroll', e, this.scrollDebounce));
-  },
+    this._scrollDebounceId = debounce(this, '_debouncedScroll', e, 150);
+  }
 
   _outsideClick(e) {
-    let { target } = e;
-    if (!target.closest(`#${this.elementId}`)) {
-      this.set('canShowDetails', false);
+    if (!this.element?.contains(e.target)) {
+      this.canShowDetails = false;
     }
-  },
+  }
 
   _debouncedScroll() {
     this.findPosition();
-  },
+  }
 
   findPosition() {
-    if (this.isDestroyed) {
+    if (this.isDestroying || this.isDestroyed) {
       return;
     }
 
-    let searchIndex = this.violation.index || 0;
-    this.set('domElement', this.violation.nodes[searchIndex].target[0]);
+    let searchIndex = this.args.violation.index || 0;
+    this.domElement = this.args.violation.nodes[searchIndex].target[0];
 
-    let violatedElement, button;
-
+    let violatedElement;
     if (this.violatedElement) {
-      violatedElement = this.violatedElement; // eslint-disable-line prefer-destructuring
+      violatedElement = this.violatedElement;
     } else {
       violatedElement = document.querySelector(this.domElement);
-      this.set('violatedElement', violatedElement);
+      this.violatedElement = violatedElement;
     }
 
     if (!violatedElement) {
@@ -139,65 +139,66 @@ export default Component.extend({
     }
 
     let violatedElementPos = violatedElement.getBoundingClientRect();
-
-    let color = impactColors[this.violation.impact];
+    let color = impactColors[this.args.violation.impact];
     let currentStyleEle = {
-      'position': 'absolute',
-      'top': `${violatedElementPos.top + window.scrollY}px`,
-      'left': `${violatedElementPos.left + window.scrollX}px`,
-      'background': color,
-      'border': `2px solid ${color.replace(', 0.5', '')}`
+      position: 'absolute',
+      top: `${violatedElementPos.top + window.scrollY}px`,
+      left: `${violatedElementPos.left + window.scrollX}px`,
+      background: color,
+      border: `2px solid ${color.replace(', 0.5', '')}`,
     };
 
-    let failureSummary = this.violation.nodes[searchIndex].failureSummary || [];
-    failureSummary = failureSummary.split('\n');
-    failureSummary = failureSummary.map((failure) => {
-      if (failure.length) {
-        if (failure.includes('Fix all of the following') || failure.includes('Fix any of the following')) {
+    let failureSummary = this.args.violation.nodes[searchIndex].failureSummary || '';
+    this.failureSummary = failureSummary
+      .split('\n')
+      .filter((s) => s.length)
+      .map((failure) => {
+        if (
+          failure.includes('Fix all of the following') ||
+          failure.includes('Fix any of the following')
+        ) {
           return htmlSafe(`<b>${failure}</b>`);
         }
-
         return htmlSafe(`<li>${failure}</li>`);
-      }
-    });
+      });
 
+    let button;
     if (this.button) {
-      button = this.button; // eslint-disable-line prefer-destructuring
+      button = this.button;
     } else {
       button = this.element.querySelector('button');
-      this.set('button', button);
+      this.button = button;
     }
 
     applyStyles(button, currentStyleEle);
+  }
 
-    this.set('failureSummary', failureSummary);
-  },
+  @action
+  showDetails() {
+    this.canShowDetails = !this.canShowDetails;
 
-  actions: {
-    showDetails() {
-      if (this.toggleProperty('canShowDetails')) {
-        let popOverElem = this.element.querySelector(`[violation-id='${this.violation.id}']`);
-        let buttonElem = this.element.querySelector('button');
-        let arrowElem = this.element.querySelector('.arrow');
+    if (this.canShowDetails) {
+      let popOverElem = this.element.querySelector(
+        `[violation-id='${this.args.violation.id}']`
+      );
+      let buttonElem = this.element.querySelector('button');
+      let arrowElem = this.element.querySelector('.arrow');
 
-        let {
-          popOverPos,
-          topPos,
-          leftRightPos,
-          arrowPos
-        } = getPopoverPosition(popOverElem, buttonElem);
+      let { popOverPos, topPos, leftRightPos, arrowPos } = getPopoverPosition(
+        popOverElem,
+        buttonElem
+      );
 
-        applyStyles(popOverElem, {
-          'top': `${topPos}px`,
-          'left': `${leftRightPos}px`
-        });
+      applyStyles(popOverElem, {
+        top: `${topPos}px`,
+        left: `${leftRightPos}px`,
+      });
 
-        applyStyles(arrowElem, {
-          'top': `${arrowPos}px`
-        });
+      applyStyles(arrowElem, {
+        top: `${arrowPos}px`,
+      });
 
-        this.set('popOverPos', popOverPos);
-      }
+      this.popOverPos = popOverPos;
     }
   }
-});
+}

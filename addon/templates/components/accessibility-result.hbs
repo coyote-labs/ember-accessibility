@@ -1,28 +1,38 @@
-<button
-  type="button"
-  aria-label="Accessibility Issue"
-  title={{violation.description}}
-  class="toggle-accessibility-result" {{action "showDetails"}}>
-</button>
+<span
+  {{did-insert this.setup}}
+  {{will-destroy this.teardown}}
+  {{on "mouseenter" this.mouseEnter}}
+  {{on "mouseleave" this.mouseLeave}}
+>
+  <button
+    type="button"
+    aria-label="Accessibility Issue"
+    title={{@violation.description}}
+    class="toggle-accessibility-result"
+    {{on "click" this.showDetails}}>
+  </button>
 
-<div class="accessibility-result-popover accessibility-result {{popOverPos}} {{if canShowDetails "show"}}" violation-id={{violation.id}}>
-  <div class="arrow {{impact}}"></div>
-  <div class="accessibility-result-content">
-    <h1>{{violation.help}}</h1>
-    {{#if violation.component}}
-      <span class="accessibility-result-component">{{violation.component}}</span>
-    {{/if}}
-    <p class="accessibility-result-description">
-      {{violation.description}}. <a href={{violation.helpUrl}} target="_blank" rel="noopener noreferrer">Read More</a>
-    </p>
-    <p class="accessibility-result-summary">
-      <ul>
-        {{#each failureSummary as |failures|}}
-          {{failures}}
-        {{/each}}
-      </ul>
-    </p>
+  <div
+    class="accessibility-result-popover accessibility-result {{this.popOverPos}} {{if this.canShowDetails 'show'}}"
+    violation-id={{@violation.id}}>
+    <div class="arrow {{@violation.impact}}"></div>
+    <div class="accessibility-result-content">
+      <h1>{{@violation.help}}</h1>
+      {{#if @violation.component}}
+        <span class="accessibility-result-component">{{@violation.component}}</span>
+      {{/if}}
+      <p class="accessibility-result-description">
+        {{@violation.description}}. <a href={{@violation.helpUrl}} target="_blank" rel="noopener noreferrer">Read More</a>
+      </p>
+      <p class="accessibility-result-summary">
+        <ul>
+          {{#each this.failureSummary as |failure|}}
+            {{failure}}
+          {{/each}}
+        </ul>
+      </p>
+    </div>
   </div>
-</div>
 
-<div class="accessbility-result-overlay"></div>
+  <div class="accessbility-result-overlay"></div>
+</span>
