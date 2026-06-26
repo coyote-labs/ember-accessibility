@@ -1,64 +1,50 @@
-import Component from '@ember/component';
-import layout from '../templates/components/accessibility-tester';
-import { computed } from '@ember/object';
-import { inject as service } from '@ember/service';
+import Component from '@glimmer/component';
+import { service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
+import { registerDestructor } from '@ember/destroyable';
 import { htmlSafe } from '@ember/template';
-import { bind } from '@ember/runloop';
 
-export default Component.extend({
-  layout,
-  accessibilityTest: service('accessibility-test'),
-  isAccessibilityTest: true,
+export default class AccessibilityTesterComponent extends Component {
+  @service accessibilityTest;
 
-  init() {
-    this._super(...arguments);
+  @tracked top = parseInt(localStorage.getItem('ember-accessibility-top'), 10) || 100;
+  @tracked left = parseInt(localStorage.getItem('ember-accessibility-left'), 10) || 1200;
+  @tracked isDragging = false;
+  @tracked preventToggle = false;
 
-    let left = localStorage.getItem('ember-accessibility-left');
-    let top = localStorage.getItem('ember-accessibility-top');
+  constructor(owner, args) {
+    super(owner, args);
 
-    this.set('top', top || this.top || 100);
-    this.set('left', left || this.left || 1200);
-  },
-
-  position: computed('top', 'left', function() {
-    return htmlSafe(`top:${this.top}px;left:${this.left}px`);
-  }),
-
-  didInsertElement() {
-    this._super(...arguments);
-
-    this.setProperties({
-      _dragStart: bind(this, 'dragStart'),
-      _dragEnd: bind(this, 'dragEnd'),
-      _drag: bind(this, 'drag')
-    });
+    this._dragStart = this.dragStart.bind(this);
+    this._dragEnd = this.dragEnd.bind(this);
+    this._drag = this.drag.bind(this);
 
     document.addEventListener('touchstart', this._dragStart);
     document.addEventListener('touchend', this._dragEnd);
     document.addEventListener('touchmove', this._drag);
-
     document.addEventListener('mousedown', this._dragStart);
     document.addEventListener('mouseup', this._dragEnd);
     document.addEventListener('mousemove', this._drag);
-  },
 
-  willDestroyElement() {
-    document.removeEventListener('touchstart', this._dragStart);
-    document.removeEventListener('touchend', this._dragEnd);
-    document.removeEventListener('touchmove', this._drag);
+    registerDestructor(this, () => {
+      document.removeEventListener('touchstart', this._dragStart);
+      document.removeEventListener('touchend', this._dragEnd);
+      document.removeEventListener('touchmove', this._drag);
+      document.removeEventListener('mousedown', this._dragStart);
+      document.removeEventListener('mouseup', this._dragEnd);
+      document.removeEventListener('mousemove', this._drag);
+    });
+  }
 
-    document.removeEventListener('mousedown', this._dragStart);
-    document.removeEventListener('mouseup', this._dragEnd);
-    document.removeEventListener('mousemove', this._drag);
-
-    this._super(...arguments);
-  },
+  get position() {
+    return htmlSafe(`top:${this.top}px;left:${this.left}px`);
+  }
 
   dragStart(e) {
-    if (e.target && e.target.dataset && e.target.dataset.testAction === 'check-accessibility') {
-      this.set('isDragging', true);
+    if (e.target?.dataset?.testAction === 'check-accessibility') {
+      this.isDragging = true;
     }
-  },
+  }
 
   dragEnd() {
     if (!this.isDragging) {
@@ -68,11 +54,9 @@ export default Component.extend({
     localStorage.setItem('ember-accessibility-left', this.left);
     localStorage.setItem('ember-accessibility-top', this.top);
 
-    this.setProperties({
-      isDragging: false,
-      preventToggle: false
-    });
-  },
+    this.isDragging = false;
+    this.preventToggle = false;
+  }
 
   drag(e) {
     if (!this.isDragging) {
@@ -82,26 +66,22 @@ export default Component.extend({
     let x = e.clientX;
     let y = e.clientY;
 
-    let toggle = this.element.querySelector('[data-action="toggle-results"]');
+    let toggle = document.querySelector('[data-action="toggle-results"]');
+    if (!toggle) return;
 
     let isOutsideRight = window.innerWidth < x + toggle.offsetWidth / 2;
     let isOutsideLeft = x < toggle.offsetWidth / 2;
-
     let isOutsideBottom = window.innerHeight < y + toggle.offsetHeight / 2;
     let isOutsideTop = y < toggle.offsetHeight / 2;
 
-    if (
-      !isOutsideBottom && !isOutsideTop
-    ) {
-      this.set('top', y - toggle.offsetHeight / 2);
+    if (!isOutsideBottom && !isOutsideTop) {
+      this.top = y - toggle.offsetHeight / 2;
     }
 
-    if (
-      !isOutsideLeft && !isOutsideRight
-    ) {
-      this.set('left', x - toggle.offsetWidth / 2);
+    if (!isOutsideLeft && !isOutsideRight) {
+      this.left = x - toggle.offsetWidth / 2;
     }
 
-    this.set('preventToggle', true);
+    this.preventToggle = true;
   }
-});
+}
