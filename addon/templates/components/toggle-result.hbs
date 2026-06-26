@@ -5,8 +5,8 @@
   <button
     type="button"
     aria-label="Scan Accessibility Issues"
-    title={{if this.accessibilityTest.violations "Disable Accessibility Issues" "Scan Accessibility Issues"}}
-    class={{if this.accessibilityTest.violations "active"}}>
+    title={{if this.accessibilityTest.violations.length "Disable Accessibility Issues" "Scan Accessibility Issues"}}
+    class={{if this.accessibilityTest.violations.length "active"}}>
     <svg
       data-test-action="check-accessibility"
       xmlns="http://www.w3.org/2000/svg"
