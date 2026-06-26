@@ -4,6 +4,6 @@ module.exports = {
   extends: 'recommended',
   rules: {
     'no-inline-styles': false,
-    'img-alt-attributes': false
-  }
+    'require-valid-alt-text': false,
+  },
 };

@@ -3,29 +3,19 @@
 module.exports = {
   root: true,
   parserOptions: {
-    ecmaVersion: 2018,
+    ecmaVersion: 2022,
     sourceType: 'module',
     ecmaFeatures: {
-      legacyDecorators: true
-    }
+      legacyDecorators: true,
+    },
   },
-  plugins: [
-    'ember',
-    'ember-suave'
-  ],
-  extends: [
-    'eslint:recommended',
-    'plugin:ember/recommended',
-    'plugin:ember-suave/recommended'
-  ],
+  plugins: ['ember'],
+  extends: ['eslint:recommended', 'plugin:ember/recommended', 'plugin:prettier/recommended'],
   env: {
-    browser: true
+    browser: true,
   },
-  rules: {
-    'ember-suave/lines-between-object-properties': 0
-  },
+  rules: {},
   overrides: [
-    // node files
     {
       files: [
         '.eslintrc.js',
@@ -36,26 +26,27 @@ module.exports = {
         'testem.js',
         'blueprints/*/index.js',
         'config/**/*.js',
-        'tests/dummy/config/**/*.js'
+        'tests/dummy/config/**/*.js',
       ],
-      excludedFiles: [
-        'addon/**',
-        'addon-test-support/**',
-        'app/**',
-        'tests/dummy/app/**'
-      ],
+      excludedFiles: ['addon/**', 'addon-test-support/**', 'app/**', 'tests/dummy/app/**'],
       parserOptions: {
         sourceType: 'script',
-        ecmaVersion: 2015
+        ecmaVersion: 2022,
       },
       env: {
         browser: false,
-        node: true
+        node: true,
       },
-      plugins: ['node'],
-      rules: Object.assign({}, require('eslint-plugin-node').configs.recommended.rules, {
-        // add your custom rules and overrides for node files here
-      })
-    }
-  ]
+      plugins: ['n'],
+      extends: ['plugin:n/recommended'],
+    },
+    {
+      files: ['tests/**/*.js'],
+      env: {
+        browser: true,
+      },
+      plugins: ['qunit'],
+      extends: ['plugin:qunit/recommended'],
+    },
+  ],
 };
