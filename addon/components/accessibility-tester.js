@@ -1,14 +1,16 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
-import { registerDestructor } from '@ember/destroyable';
-import { htmlSafe } from '@ember/template';
+import Component from "@glimmer/component";
+import { service } from "@ember/service";
+import { tracked } from "@glimmer/tracking";
+import { registerDestructor } from "@ember/destroyable";
+import { htmlSafe } from "@ember/template";
 
 export default class AccessibilityTesterComponent extends Component {
   @service accessibilityTest;
 
-  @tracked top = parseInt(localStorage.getItem('ember-accessibility-top'), 10) || 100;
-  @tracked left = parseInt(localStorage.getItem('ember-accessibility-left'), 10) || 1200;
+  @tracked top =
+    parseInt(localStorage.getItem("ember-accessibility-top"), 10) || 100;
+  @tracked left =
+    parseInt(localStorage.getItem("ember-accessibility-left"), 10) || 1200;
   @tracked isDragging = false;
   @tracked preventToggle = false;
 
@@ -19,20 +21,20 @@ export default class AccessibilityTesterComponent extends Component {
     this._dragEnd = this.dragEnd.bind(this);
     this._drag = this.drag.bind(this);
 
-    document.addEventListener('touchstart', this._dragStart);
-    document.addEventListener('touchend', this._dragEnd);
-    document.addEventListener('touchmove', this._drag);
-    document.addEventListener('mousedown', this._dragStart);
-    document.addEventListener('mouseup', this._dragEnd);
-    document.addEventListener('mousemove', this._drag);
+    document.addEventListener("touchstart", this._dragStart);
+    document.addEventListener("touchend", this._dragEnd);
+    document.addEventListener("touchmove", this._drag);
+    document.addEventListener("mousedown", this._dragStart);
+    document.addEventListener("mouseup", this._dragEnd);
+    document.addEventListener("mousemove", this._drag);
 
     registerDestructor(this, () => {
-      document.removeEventListener('touchstart', this._dragStart);
-      document.removeEventListener('touchend', this._dragEnd);
-      document.removeEventListener('touchmove', this._drag);
-      document.removeEventListener('mousedown', this._dragStart);
-      document.removeEventListener('mouseup', this._dragEnd);
-      document.removeEventListener('mousemove', this._drag);
+      document.removeEventListener("touchstart", this._dragStart);
+      document.removeEventListener("touchend", this._dragEnd);
+      document.removeEventListener("touchmove", this._drag);
+      document.removeEventListener("mousedown", this._dragStart);
+      document.removeEventListener("mouseup", this._dragEnd);
+      document.removeEventListener("mousemove", this._drag);
     });
   }
 
@@ -41,7 +43,7 @@ export default class AccessibilityTesterComponent extends Component {
   }
 
   dragStart(e) {
-    if (e.target?.dataset?.testAction === 'check-accessibility') {
+    if (e.target?.dataset?.testAction === "check-accessibility") {
       this.isDragging = true;
     }
   }
@@ -51,8 +53,8 @@ export default class AccessibilityTesterComponent extends Component {
       return;
     }
 
-    localStorage.setItem('ember-accessibility-left', this.left);
-    localStorage.setItem('ember-accessibility-top', this.top);
+    localStorage.setItem("ember-accessibility-left", this.left);
+    localStorage.setItem("ember-accessibility-top", this.top);
 
     this.isDragging = false;
     this.preventToggle = false;

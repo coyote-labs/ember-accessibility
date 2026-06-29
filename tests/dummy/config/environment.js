@@ -1,12 +1,12 @@
-'use strict';
-const emberAccessibility = require('./accessibility');
+"use strict";
+const emberAccessibility = require("./accessibility");
 
-module.exports = function(environment) {
+module.exports = function (environment) {
   let ENV = {
-    modulePrefix: 'dummy',
+    modulePrefix: "dummy",
     environment,
-    rootURL: '/',
-    locationType: 'history',
+    rootURL: "/",
+    locationType: "history",
     EmberENV: {
       FEATURES: {},
       EXTEND_PROTOTYPES: {
@@ -14,20 +14,20 @@ module.exports = function(environment) {
       },
     },
     APP: {},
-    'ember-accessibility': emberAccessibility,
+    "ember-accessibility": emberAccessibility,
   };
 
-  if (environment === 'test') {
-    ENV.locationType = 'none';
+  if (environment === "test") {
+    ENV.locationType = "none";
     ENV.APP.LOG_ACTIVE_GENERATION = false;
     ENV.APP.LOG_VIEW_LOOKUPS = false;
-    ENV.APP.rootElement = '#ember-testing';
+    ENV.APP.rootElement = "#ember-testing";
     ENV.APP.autoboot = false;
   }
 
-  if (environment === 'production') {
-    ENV.locationType = 'hash';
-    ENV.rootURL = '/ember-accessibility/';
+  if (environment === "production") {
+    ENV.locationType = "hash";
+    ENV.rootURL = "/ember-accessibility/";
   }
 
   return ENV;

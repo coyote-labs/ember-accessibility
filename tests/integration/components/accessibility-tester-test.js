@@ -1,20 +1,24 @@
-import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { module, test } from "qunit";
+import { setupRenderingTest } from "ember-qunit";
+import { render } from "@ember/test-helpers";
+import { hbs } from "ember-cli-htmlbars";
 
-module('Integration | Component | accessibility-tester', function(hooks) {
+module("Integration | Component | accessibility-tester", function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
+  test("it renders", async function (assert) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.set('myAction', function(val) { ... });
 
     await render(hbs`<AccessibilityTester />`);
 
-    assert.equal(
-      this.element.querySelector('[data-test-action="check-accessibility"]').tagName,
-      'svg'
+    const svg = this.element.querySelector(
+      '[data-test-action="check-accessibility"]'
     );
+    assert.ok(
+      svg,
+      `SVG element not found. HTML: ${this.element.innerHTML.substring(0, 500)}`
+    );
+    assert.strictEqual(svg?.tagName.toLowerCase(), "svg");
   });
 });

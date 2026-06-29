@@ -1,8 +1,8 @@
-import Route from '@ember/routing/route';
-import { inject as service } from '@ember/service';
+import Route from "@ember/routing/route";
+import { inject as service } from "@ember/service";
 
 Route.reopen({
-  accessibilityTest: service('accessibility-test'),
+  accessibilityTest: service("accessibility-test"),
 
   deactivate() {
     this._super(...arguments);

@@ -1,26 +1,29 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { htmlSafe } from '@ember/template';
-import { bind, debounce, cancel } from '@ember/runloop';
+import Component from "@glimmer/component";
+import { service } from "@ember/service";
+import { tracked } from "@glimmer/tracking";
+import { action } from "@ember/object";
+import { htmlSafe } from "@ember/template";
+import { bind, debounce, cancel } from "@ember/runloop";
 
-import findScrollContainer from '@coyote-labs/ember-accessibility/utils/find-scroll-container';
-import getPopoverPosition from '@coyote-labs/ember-accessibility/utils/get-popover-position';
-import { applyStyles, resetStyles } from '@coyote-labs/ember-accessibility/utils/element-style';
+import findScrollContainer from "@coyote-labs/ember-accessibility/utils/find-scroll-container";
+import getPopoverPosition from "@coyote-labs/ember-accessibility/utils/get-popover-position";
+import {
+  applyStyles,
+  resetStyles,
+} from "@coyote-labs/ember-accessibility/utils/element-style";
 
 const impactColors = {
-  critical: 'rgb(220, 53, 69, 0.5)',
-  serious: 'rgb(255, 153, 102, 0.5)',
-  moderate: 'rgb(255, 204, 0, 0.5)',
-  minor: 'rgb(23, 162, 184, 0.5)',
+  critical: "rgb(220, 53, 69, 0.5)",
+  serious: "rgb(255, 153, 102, 0.5)",
+  moderate: "rgb(255, 204, 0, 0.5)",
+  minor: "rgb(23, 162, 184, 0.5)",
 };
 
 export default class AccessibilityResultComponent extends Component {
   @service accessibilityTest;
 
   @tracked canShowDetails = false;
-  @tracked popOverPos = '';
+  @tracked popOverPos = "";
   @tracked failureSummary = [];
 
   element = null;
@@ -32,7 +35,7 @@ export default class AccessibilityResultComponent extends Component {
   button = null;
 
   get impactIcon() {
-    let { impact = 'minor' } = this.args.violation;
+    let { impact = "minor" } = this.args.violation;
     return `${impact.toLowerCase()}-icon`;
   }
 
@@ -53,50 +56,53 @@ export default class AccessibilityResultComponent extends Component {
     let violatingElement = document.querySelector(this.domElement);
 
     if (!violatingElement) {
-      this.accessibilityTest.violations = this.accessibilityTest.violations.filter(
-        (v) => v !== this.args.violation
-      );
+      this.accessibilityTest.violations =
+        this.accessibilityTest.violations.filter(
+          (v) => v !== this.args.violation
+        );
       return;
     }
 
     let rectangle = violatingElement.getBoundingClientRect();
 
-    applyStyles(this.element.querySelector('.accessbility-result-overlay'), {
-      position: 'absolute',
+    applyStyles(this.element.querySelector(".accessbility-result-overlay"), {
+      position: "absolute",
       top: `${rectangle.top + window.scrollY}px`,
       left: `${rectangle.left + window.scrollX}px`,
       bottom: `${rectangle.bottom}px`,
       right: `${rectangle.right}px`,
       height: `${rectangle.height}px`,
       width: `${rectangle.width}px`,
-      background: 'rgba(0, 0, 0, 0.3)',
-      'border-radius': '5px',
-      'z-index': '2147483635',
+      background: "rgba(0, 0, 0, 0.3)",
+      "border-radius": "5px",
+      "z-index": "2147483635",
     });
   }
 
   @action
   mouseLeave() {
-    resetStyles(this.element.querySelector('.accessbility-result-overlay'));
+    resetStyles(this.element.querySelector(".accessbility-result-overlay"));
   }
 
   _listen() {
-    this._scrollHandler = bind(this, '_scroll');
-    this._clickHandler = bind(this, '_outsideClick');
+    this._scrollHandler = bind(this, "_scroll");
+    this._clickHandler = bind(this, "_outsideClick");
 
-    this._listener().addEventListener('scroll', this._scrollHandler);
-    document.addEventListener('click', this._clickHandler);
+    this._listener().addEventListener("scroll", this._scrollHandler);
+    document.addEventListener("click", this._clickHandler);
   }
 
   _stopListening() {
-    this._listener().removeEventListener('scroll', this._scrollHandler);
-    document.removeEventListener('click', this._clickHandler);
+    this._listener().removeEventListener("scroll", this._scrollHandler);
+    document.removeEventListener("click", this._clickHandler);
     cancel(this._scrollDebounceId);
   }
 
   _listener() {
     let searchIndex = this.args.violation.index || 0;
-    let node = document.querySelector(this.args.violation.nodes[searchIndex].target[0]);
+    let node = document.querySelector(
+      this.args.violation.nodes[searchIndex].target[0]
+    );
     let scrollParentElement = findScrollContainer(node);
     if (scrollParentElement) {
       return scrollParentElement;
@@ -105,7 +111,7 @@ export default class AccessibilityResultComponent extends Component {
   }
 
   _scroll(e) {
-    this._scrollDebounceId = debounce(this, '_debouncedScroll', e, 150);
+    this._scrollDebounceId = debounce(this, "_debouncedScroll", e, 150);
   }
 
   _outsideClick(e) {
@@ -141,21 +147,22 @@ export default class AccessibilityResultComponent extends Component {
     let violatedElementPos = violatedElement.getBoundingClientRect();
     let color = impactColors[this.args.violation.impact];
     let currentStyleEle = {
-      position: 'absolute',
+      position: "absolute",
       top: `${violatedElementPos.top + window.scrollY}px`,
       left: `${violatedElementPos.left + window.scrollX}px`,
       background: color,
-      border: `2px solid ${color.replace(', 0.5', '')}`,
+      border: `2px solid ${color.replace(", 0.5", "")}`,
     };
 
-    let failureSummary = this.args.violation.nodes[searchIndex].failureSummary || '';
+    let failureSummary =
+      this.args.violation.nodes[searchIndex].failureSummary || "";
     this.failureSummary = failureSummary
-      .split('\n')
+      .split("\n")
       .filter((s) => s.length)
       .map((failure) => {
         if (
-          failure.includes('Fix all of the following') ||
-          failure.includes('Fix any of the following')
+          failure.includes("Fix all of the following") ||
+          failure.includes("Fix any of the following")
         ) {
           return htmlSafe(`<b>${failure}</b>`);
         }
@@ -166,7 +173,7 @@ export default class AccessibilityResultComponent extends Component {
     if (this.button) {
       button = this.button;
     } else {
-      button = this.element.querySelector('button');
+      button = this.element.querySelector("button");
       this.button = button;
     }
 
@@ -178,15 +185,15 @@ export default class AccessibilityResultComponent extends Component {
     this.canShowDetails = !this.canShowDetails;
 
     if (!this.canShowDetails) {
-      this.popOverPos = '';
+      this.popOverPos = "";
       return;
     }
 
     let popOverElem = this.element.querySelector(
       `[violation-id='${this.args.violation.id}']`
     );
-    let buttonElem = this.element.querySelector('button');
-    let arrowElem = this.element.querySelector('.arrow');
+    let buttonElem = this.element.querySelector("button");
+    let arrowElem = this.element.querySelector(".arrow");
 
     let { popOverPos, topPos, leftRightPos, arrowPos } = getPopoverPosition(
       popOverElem,

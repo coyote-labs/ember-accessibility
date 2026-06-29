@@ -1,24 +1,27 @@
-import axeCore from 'axe-core';
-import config from 'ember-get-config';
+import axeCore from "axe-core";
+import config from "ember-get-config";
 
 export default async function auditWithAxe(element) {
-  let { axe = {} } = config['ember-accessibility'];
+  let { axe = {} } = config["ember-accessibility"];
 
   // axe-core will only return the full details of the violations
   // array and will only return one instance of each of the inapplicable,
   // incomplete and pass arrays for each rule that has at least one of
   // those entries. This will reduce the amount of computation that axe-core
   // does for the unique selectors.
-  let options = Object.assign({
-    'resultTypes': ['violations']
-  }, axe);
+  let options = Object.assign(
+    {
+      resultTypes: ["violations"],
+    },
+    axe
+  );
 
   let violations = [];
   let axeResults;
 
   try {
     axeResults = await axeCore.run(element, options);
-  } catch({ message }) {
+  } catch ({ message }) {
     // eslint-disable-next-line no-console
     console.warn(`[ember-accessibility] ${message}`);
     return violations;

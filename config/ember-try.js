@@ -1,66 +1,66 @@
-'use strict';
+"use strict";
 
-const getChannelURL = require('ember-source-channel-url');
+const getChannelURL = require("ember-source-channel-url");
 
-module.exports = async function() {
+module.exports = async function () {
   let [releaseUrl, betaUrl, canaryUrl] = await Promise.all([
-    getChannelURL('release'),
-    getChannelURL('beta'),
-    getChannelURL('canary'),
+    getChannelURL("release"),
+    getChannelURL("beta"),
+    getChannelURL("canary"),
   ]);
 
   return {
     scenarios: [
       {
-        name: 'ember-lts-4.4',
+        name: "ember-lts-4.4",
         npm: {
           devDependencies: {
-            'ember-source': '~4.4.0',
+            "ember-source": "~4.4.0",
           },
         },
       },
       {
-        name: 'ember-lts-4.8',
+        name: "ember-lts-4.8",
         npm: {
           devDependencies: {
-            'ember-source': '~4.8.0',
+            "ember-source": "~4.8.0",
           },
         },
       },
       {
-        name: 'ember-lts-4.12',
+        name: "ember-lts-4.12",
         npm: {
           devDependencies: {
-            'ember-source': '~4.12.0',
+            "ember-source": "~4.12.0",
           },
         },
       },
       {
-        name: 'ember-release',
+        name: "ember-release",
         npm: {
           devDependencies: {
-            'ember-source': releaseUrl,
+            "ember-source": releaseUrl,
           },
         },
       },
       {
-        name: 'ember-beta',
+        name: "ember-beta",
         npm: {
           devDependencies: {
-            'ember-source': betaUrl,
+            "ember-source": betaUrl,
           },
         },
       },
       {
-        name: 'ember-canary',
+        name: "ember-canary",
         npm: {
           devDependencies: {
-            'ember-source': canaryUrl,
+            "ember-source": canaryUrl,
           },
         },
       },
       {
-        name: 'ember-default',
+        name: "ember-default",
         npm: {
           devDependencies: {},
         },

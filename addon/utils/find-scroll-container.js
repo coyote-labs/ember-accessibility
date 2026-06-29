@@ -5,9 +5,9 @@ function getElementStyles(node, prop) {
 function doesElementHasScroll(node) {
   let regex = /(auto|scroll)/;
   return regex.test(
-    getElementStyles(node, 'overflow')
-    + getElementStyles(node, 'overflow-y')
-    + getElementStyles(node, 'overflow-x')
+    getElementStyles(node, "overflow") +
+      getElementStyles(node, "overflow-y") +
+      getElementStyles(node, "overflow-x")
   );
 }
 
@@ -23,6 +23,6 @@ function findScrollContainer(node) {
   return findScrollContainer(node.parentNode);
 }
 
-export default function(node) {
+export default function (node) {
   return findScrollContainer(node);
 }

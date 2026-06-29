@@ -1,13 +1,13 @@
-import Service from '@ember/service';
-import { tracked } from '@glimmer/tracking';
-import audit from '@coyote-labs/ember-accessibility/utils/audit';
+import Service from "@ember/service";
+import { tracked } from "@glimmer/tracking";
+import audit from "@coyote-labs/ember-accessibility/utils/audit";
 
 export default class AccessibilityTestService extends Service {
   @tracked violations = [];
   @tracked renderedComponents = [];
   @tracked isEnabled = false;
 
-  async getViolations(element = document.querySelector('body'), component) {
+  async getViolations(element = document.querySelector("body"), component) {
     let violations = await audit(element);
 
     violations = violations.map((violation) => {

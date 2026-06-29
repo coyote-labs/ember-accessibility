@@ -1,8 +1,7 @@
-import Component from '@glimmer/component';
-import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { next } from '@ember/runloop';
+import Component from "@glimmer/component";
+import { service } from "@ember/service";
+import { tracked } from "@glimmer/tracking";
+import { action } from "@ember/object";
 
 export default class ToggleResultComponent extends Component {
   @service accessibilityTest;
@@ -15,7 +14,7 @@ export default class ToggleResultComponent extends Component {
       return;
     }
 
-    if (e.target?.classList?.contains('accessibility-loading-overlay')) {
+    if (e.target?.classList?.contains("accessibility-loading-overlay")) {
       return;
     }
 
@@ -28,9 +27,7 @@ export default class ToggleResultComponent extends Component {
     this.isAuditing = true;
     this.accessibilityTest.isEnabled = true;
 
-    next(this, async function () {
-      await this.accessibilityTest.getViolations();
-      this.isAuditing = false;
-    });
+    await this.accessibilityTest.getViolations();
+    this.isAuditing = false;
   }
 }
