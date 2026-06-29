@@ -44,12 +44,19 @@ module("Acceptance | application", function (hooks) {
     });
 
     const service = this.owner.lookup("service:accessibility-test");
-    assert.ok(service.violations.length > 0, "Violations found after first toggle");
+    assert.ok(
+      service.violations.length > 0,
+      "Violations found after first toggle"
+    );
     assert.ok(service.isEnabled, "Service is enabled after first toggle");
 
     await triggerEvent(".accessibility-toggle-results", "mouseup");
 
-    assert.strictEqual(service.violations.length, 0, "Violations cleared after toggling off");
+    assert.strictEqual(
+      service.violations.length,
+      0,
+      "Violations cleared after toggling off"
+    );
     assert.false(service.isEnabled, "Service is disabled after toggling off");
     assert.strictEqual(
       findAll('[data-test-title="accessibility-result"]').length,
