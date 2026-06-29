@@ -3,6 +3,8 @@
   @preventToggle={{this.preventToggle}}
   style={{this.position}} />
 
+<span data-test-violation-count>{{this.accessibilityTest.violations.length}}</span>
+
 {{#each this.accessibilityTest.violations as |violation|}}
   <AccessibilityResult data-test-title="accessibility-result" @violation={{violation}} />
 {{/each}}
