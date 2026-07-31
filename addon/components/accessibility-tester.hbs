@@ -1,7 +1,9 @@
 <ToggleResult
   data-action="toggle-results"
   @preventToggle={{this.preventToggle}}
-  style={{this.position}} />
+  style={{this.position}}
+  {{did-insert this.setup}}
+  {{will-destroy this.teardown}} />
 
 <span data-test-violation-count>{{this.accessibilityTest.violations.length}}</span>
 

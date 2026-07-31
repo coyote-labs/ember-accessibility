@@ -1,21 +1,23 @@
 import Component from "@glimmer/component";
 import { service } from "@ember/service";
 import { tracked } from "@glimmer/tracking";
-import { registerDestructor } from "@ember/destroyable";
+import { action } from "@ember/object";
 import { htmlSafe } from "@ember/template";
 
 export default class AccessibilityTesterComponent extends Component {
   @service accessibilityTest;
 
-  @tracked top =
-    parseInt(localStorage.getItem("ember-accessibility-top"), 10) || 100;
-  @tracked left =
-    parseInt(localStorage.getItem("ember-accessibility-left"), 10) || 1200;
+  @tracked top = 100;
+  @tracked left = 1200;
   @tracked isDragging = false;
   @tracked preventToggle = false;
 
-  constructor(owner, args) {
-    super(owner, args);
+  @action
+  setup() {
+    this.top =
+      parseInt(localStorage.getItem("ember-accessibility-top"), 10) || 100;
+    this.left =
+      parseInt(localStorage.getItem("ember-accessibility-left"), 10) || 1200;
 
     this._dragStart = this.dragStart.bind(this);
     this._dragEnd = this.dragEnd.bind(this);
@@ -27,15 +29,16 @@ export default class AccessibilityTesterComponent extends Component {
     document.addEventListener("mousedown", this._dragStart);
     document.addEventListener("mouseup", this._dragEnd);
     document.addEventListener("mousemove", this._drag);
+  }
 
-    registerDestructor(this, () => {
-      document.removeEventListener("touchstart", this._dragStart);
-      document.removeEventListener("touchend", this._dragEnd);
-      document.removeEventListener("touchmove", this._drag);
-      document.removeEventListener("mousedown", this._dragStart);
-      document.removeEventListener("mouseup", this._dragEnd);
-      document.removeEventListener("mousemove", this._drag);
-    });
+  @action
+  teardown() {
+    document.removeEventListener("touchstart", this._dragStart);
+    document.removeEventListener("touchend", this._dragEnd);
+    document.removeEventListener("touchmove", this._drag);
+    document.removeEventListener("mousedown", this._dragStart);
+    document.removeEventListener("mouseup", this._dragEnd);
+    document.removeEventListener("mousemove", this._drag);
   }
 
   get position() {
