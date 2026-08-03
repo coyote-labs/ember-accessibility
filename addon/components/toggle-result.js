@@ -1,42 +1,33 @@
-import Component from '@ember/component';
-import layout from '../templates/components/toggle-result';
-import { inject as service } from '@ember/service';
-import { next } from '@ember/runloop';
+import Component from "@glimmer/component";
+import { service } from "@ember/service";
+import { tracked } from "@glimmer/tracking";
+import { action } from "@ember/object";
 
-export default Component.extend({
-  layout,
-  isAccessibilityTest: true,
-  classNames: ['accessibility-toggle-results'],
-  accessibilityTest: service('accessibility-test'),
+export default class ToggleResultComponent extends Component {
+  @service accessibilityTest;
 
-  async mouseUp(e) {
-    if (this.preventToggle) {
+  @tracked isAuditing = false;
+
+  @action
+  async handleMouseUp(e) {
+    if (this.args.preventToggle) {
       return;
     }
 
-    if (e.target
-      && e.target.classList
-      && e.target.classList.contains('accessibility-loading-overlay')) {
+    if (e.target?.classList?.contains("accessibility-loading-overlay")) {
       return;
     }
 
     if (this.accessibilityTest.isEnabled) {
-      this.accessibilityTest.setProperties({
-        'violations': [],
-        'isEnabled': false
-      });
-
+      this.accessibilityTest.violations = [];
+      this.accessibilityTest.isEnabled = false;
       return;
     }
 
-    this.setProperties({
-      'isAuditing': true,
-      'accessibilityTest.isEnabled': true
-    });
+    this.isAuditing = true;
+    this.accessibilityTest.isEnabled = true;
 
-    next(this, async function() {
-      await this.accessibilityTest.getViolations();
-      this.set('isAuditing', false);
-    });
+    await this.accessibilityTest.getViolations();
+    this.isAuditing = false;
   }
-});
+}

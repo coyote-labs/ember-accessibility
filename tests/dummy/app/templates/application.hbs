@@ -6,7 +6,7 @@
 
   <button class="empty-btn" type="button"></button>
 
-  <button type="button" {{action "toggle"}} data-toggle="display-text">Click to display some form elements</button>
+  <button type="button" {{on "click" this.toggle}} data-toggle="display-text">Click to display some form elements</button>
   {{#if this.canShowComponent}}
     <ElementsWithoutLabel />
   {{/if}}

@@ -7,10 +7,10 @@ export function applyStyles(element, values) {
 export function resetStyles(element, values) {
   if (values) {
     values.forEach((styleprop) => {
-      element.style[styleprop] = '';
+      element.style[styleprop] = "";
     });
   } else {
-    element.style = '';
+    element.style = "";
   }
 }
 

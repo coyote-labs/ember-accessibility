@@ -1,14 +1,14 @@
-'use strict';
+"use strict";
 
-const writeFile = require('broccoli-file-creator');
-const mergeTrees = require('broccoli-merge-trees');
+const writeFile = require("broccoli-file-creator");
+const mergeTrees = require("broccoli-merge-trees");
 
-const dummyFiles = require('./utils/dummy-files');
+const dummyFiles = require("./utils/dummy-files");
 
 let filesTree = [];
 
 module.exports = {
-  name: require('./package').name,
+  name: require("./package").name,
 
   addonOptions: {},
 
@@ -17,7 +17,7 @@ module.exports = {
 
     // If the addon has the _findHost() method (in ember-cli >= 2.7.0), we'll just
     // use that.
-    if (typeof this._findHost === 'function') {
+    if (typeof this._findHost === "function") {
       app = this._findHost();
     } else {
       // Otherwise, we'll use this implementation borrowed from the _findHost()
@@ -29,10 +29,11 @@ module.exports = {
     }
 
     this.app = app;
-    this.addonOptions = this.app.project.config(app.env)['ember-accessibility'] || {};
+    this.addonOptions =
+      this.app.project.config(app.env)["ember-accessibility"] || {};
 
     if (this.addonOptions.isEnabled) {
-      this.app.import('vendor/style.css');
+      this.app.import("vendor/style.css");
     }
 
     this._super.included.apply(this, arguments);
@@ -60,9 +61,9 @@ module.exports = {
 
   treeForAddonTestSupport(tree) {
     if (!this.addonOptions.isEnabled) {
-      return writeFile('test-support/audit.js', '');
+      return writeFile("test-support/audit.js", "");
     }
 
     return this._super.treeForAddonTestSupport.call(this, tree);
-  }
+  },
 };
